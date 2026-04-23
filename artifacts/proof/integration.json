@@ -1,0 +1,62 @@
+{
+  "command": "/Users/dawsonblock/.openclaw-autoclaw/workspace/hysight-patch/.venv/bin/python scripts/run_tests.py --integration",
+  "commit_sha": "local-worktree",
+  "environment_mode": "repo_local_venv",
+  "error_test_count": 0,
+  "failed_test_count": 0,
+  "generated_at": "2026-04-23T20:40:37.661484+00:00",
+  "junit_xml": null,
+  "metadata": {
+    "covered_proof_steps": [
+      "integration"
+    ],
+    "failed_proof_steps": [],
+    "includes_optional_proof_steps": true,
+    "omitted_proof_steps": [
+      "pipeline",
+      "backend-baseline",
+      "contract",
+      "frontend",
+      "mongo-live",
+      "sidecar",
+      "autonomy-optional"
+    ],
+    "passed_proof_steps": [
+      "integration"
+    ],
+    "receipt_scope": "This receipt covers only the proof steps listed in covered_proof_steps.",
+    "steps": [
+      {
+        "collection_issues": [],
+        "counts": {
+          "error_test_count": 0,
+          "failed_test_count": 0,
+          "passed_test_count": 12,
+          "skipped_test_count": 0,
+          "total_test_count": 12
+        },
+        "id": "integration",
+        "junit_xml": "test_reports/pytest/backend-integration-proof.xml",
+        "name": "Backend integration proof",
+        "outcome": "passed",
+        "proof_failure_reason": null,
+        "proof_metadata": null,
+        "receipt_json": null,
+        "returncode": 0,
+        "skipped_cases": []
+      }
+    ]
+  },
+  "outcome": "passed",
+  "passed_test_count": 12,
+  "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "proof_tier": "integration",
+  "python_version": "3.14.3",
+  "repo_fingerprint": "9e1e8c15b2b197ac46b1e129c1ebe620f86c5f45",
+  "schema_version": 2,
+  "service_connection_mode": "mocked-boundary",
+  "service_endpoint": "n/a",
+  "skipped_test_count": 0,
+  "timestamp": "2026-04-23T20:40:37.661484+00:00",
+  "total_test_count": 12
+}

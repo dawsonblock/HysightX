@@ -1,0 +1,102 @@
+{
+  "command": "/Users/dawsonblock/.openclaw-autoclaw/workspace/hysight-patch/.venv/bin/python scripts/run_tests.py",
+  "commit_sha": "local-worktree",
+  "environment_mode": "repo_local_venv",
+  "error_test_count": 0,
+  "failed_test_count": 0,
+  "generated_at": "2026-04-23T20:40:29.527089+00:00",
+  "junit_xml": null,
+  "metadata": {
+    "covered_proof_steps": [
+      "pipeline",
+      "backend-baseline",
+      "contract"
+    ],
+    "failed_proof_steps": [],
+    "includes_optional_proof_steps": false,
+    "omitted_proof_steps": [
+      "frontend",
+      "integration",
+      "mongo-live",
+      "sidecar",
+      "autonomy-optional"
+    ],
+    "passed_proof_steps": [
+      "pipeline",
+      "backend-baseline",
+      "contract"
+    ],
+    "receipt_scope": "This receipt covers only the proof steps listed in covered_proof_steps.",
+    "steps": [
+      {
+        "collection_issues": [],
+        "counts": {
+          "error_test_count": 0,
+          "failed_test_count": 0,
+          "passed_test_count": 7,
+          "skipped_test_count": 0,
+          "total_test_count": 7
+        },
+        "id": "pipeline",
+        "junit_xml": "test_reports/pytest/hca-pipeline-proof.xml",
+        "name": "HCA pipeline proof",
+        "outcome": "passed",
+        "proof_failure_reason": null,
+        "proof_metadata": null,
+        "receipt_json": null,
+        "returncode": 0,
+        "skipped_cases": []
+      },
+      {
+        "collection_issues": [],
+        "counts": {
+          "error_test_count": 0,
+          "failed_test_count": 0,
+          "passed_test_count": 98,
+          "skipped_test_count": 0,
+          "total_test_count": 98
+        },
+        "id": "backend-baseline",
+        "junit_xml": "test_reports/pytest/backend-baseline-proof.xml",
+        "name": "Backend baseline proof",
+        "outcome": "passed",
+        "proof_failure_reason": null,
+        "proof_metadata": null,
+        "receipt_json": null,
+        "returncode": 0,
+        "skipped_cases": []
+      },
+      {
+        "collection_issues": [],
+        "counts": {
+          "error_test_count": 0,
+          "failed_test_count": 0,
+          "passed_test_count": 18,
+          "skipped_test_count": 0,
+          "total_test_count": 18
+        },
+        "id": "contract",
+        "junit_xml": "test_reports/pytest/contract-conformance-proof.xml",
+        "name": "Contract conformance proof",
+        "outcome": "passed",
+        "proof_failure_reason": null,
+        "proof_metadata": null,
+        "receipt_json": null,
+        "returncode": 0,
+        "skipped_cases": []
+      }
+    ]
+  },
+  "outcome": "passed",
+  "passed_test_count": 123,
+  "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "proof_tier": "baseline",
+  "python_version": "3.14.3",
+  "repo_fingerprint": "2f09c8b7ef0385ae8133be03eef23506d1696863",
+  "schema_version": 2,
+  "service_connection_mode": "none",
+  "service_endpoint": "n/a",
+  "skipped_test_count": 0,
+  "timestamp": "2026-04-23T20:40:29.527089+00:00",
+  "total_test_count": 123
+}

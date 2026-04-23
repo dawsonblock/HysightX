@@ -1,0 +1,63 @@
+{
+  "command": "/Users/dawsonblock/Downloads/HysightX/.venv/bin/python scripts/run_tests.py --baseline-step backend-baseline",
+  "commit_sha": "local-worktree",
+  "environment_mode": "repo_local_venv",
+  "error_test_count": 0,
+  "failed_test_count": 17,
+  "failure_reason": "[Backend baseline proof] exited with code 1",
+  "generated_at": "2026-04-23T21:38:06.866728+00:00",
+  "junit_xml": null,
+  "metadata": {
+    "covered_proof_steps": [
+      "backend-baseline"
+    ],
+    "failed_proof_steps": [
+      "backend-baseline"
+    ],
+    "includes_optional_proof_steps": false,
+    "omitted_proof_steps": [
+      "pipeline",
+      "contract",
+      "frontend",
+      "integration",
+      "mongo-live",
+      "sidecar",
+      "autonomy-optional"
+    ],
+    "passed_proof_steps": [],
+    "receipt_scope": "This receipt covers only the proof steps listed in covered_proof_steps.",
+    "steps": [
+      {
+        "collection_issues": [],
+        "counts": {
+          "error_test_count": 0,
+          "failed_test_count": 17,
+          "passed_test_count": 81,
+          "skipped_test_count": 0,
+          "total_test_count": 98
+        },
+        "id": "backend-baseline",
+        "junit_xml": "test_reports/pytest/backend-baseline-proof.xml",
+        "name": "Backend baseline proof",
+        "outcome": "failed",
+        "proof_failure_reason": null,
+        "proof_metadata": null,
+        "receipt_json": null,
+        "returncode": 1,
+        "skipped_cases": []
+      }
+    ]
+  },
+  "outcome": "failed",
+  "passed_test_count": 81,
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "proof_tier": "backend-baseline",
+  "python_version": "3.9.7",
+  "repo_fingerprint": "1ef364b9b58099eafc2543dc997146f5e82da386",
+  "schema_version": 2,
+  "service_connection_mode": "none",
+  "service_endpoint": "n/a",
+  "skipped_test_count": 0,
+  "timestamp": "2026-04-23T21:38:06.866728+00:00",
+  "total_test_count": 98
+}

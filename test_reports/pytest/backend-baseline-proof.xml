@@ -1,0 +1,1420 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="17" skipped="0" tests="98" time="4.074" timestamp="2026-04-23T15:38:02.603887-06:00" hostname="Mac.gateway.sasktel.net"><testcase classname="backend.tests.test_hca" name="test_root_message" time="0.038" /><testcase classname="backend.tests.test_hca" name="test_get_run_not_found" time="0.021"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/xt/jh84t2kj6hl26tk5qx3m_28h0000gn/T/pytest-of-dawsonblock/pytest-325/test_get_run_not_found0/storage/runs/nonexistent-run-id/run.json'">app_client = &lt;starlette.testclient.TestClient object at 0x10d10fbe0&gt;
+
+    def test_get_run_not_found(app_client):
+&gt;       r = app_client.get("/api/hca/run/nonexistent-run-id")
+
+backend/tests/test_hca.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.9/site-packages/starlette/testclient.py:479: in get
+    return super().get(
+.venv/lib/python3.9/site-packages/httpx/_client.py:1053: in get
+    return self.request(
+.venv/lib/python3.9/site-packages/starlette/testclient.py:451: in request
+    return super().request(
+.venv/lib/python3.9/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.9/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.9/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.9/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.9/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.9/site-packages/starlette/testclient.py:354: in handle_request
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/testclient.py:351: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:334: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:445: in result
+    return self.__get_result()
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:390: in __get_result
+    raise self._exception
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:259: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.9/site-packages/fastapi/applications.py:1138: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.9/site-packages/starlette/middleware/cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:736: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:290: in handle
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:121: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:107: in app
+    response = await f(request)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:426: in app
+    raw_response = await run_endpoint_function(
+.venv/lib/python3.9/site-packages/fastapi/routing.py:314: in run_endpoint_function
+    return await dependant.call(**values)
+backend/server_hca_routes.py:57: in get_hca_run
+    require_run_context(run_id)
+hca/src/hca/api/run_views.py:71: in require_run_context
+    context = load_run(run_id)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run_id = 'nonexistent-run-id'
+
+    def load_run(run_id: str) -&gt; Any:
+        path = run_path(run_id)
+&gt;       with open(path, "r", encoding="utf-8") as f:
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/xt/jh84t2kj6hl26tk5qx3m_28h0000gn/T/pytest-of-dawsonblock/pytest-325/test_get_run_not_found0/storage/runs/nonexistent-run-id/run.json'
+
+hca/src/hca/storage/runs.py:34: FileNotFoundError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_list_runs_returns_bounded_summaries" time="0.043" /><testcase classname="backend.tests.test_hca" name="test_list_runs_query_filters_by_goal" time="0.022" /><testcase classname="backend.tests.test_hca" name="test_get_run_events_returns_newest_first" time="0.022"><failure message="assert 30 == 3">app_client = &lt;starlette.testclient.TestClient object at 0x10d54bfd0&gt;
+
+    def test_get_run_events_returns_newest_first(app_client):
+        context = _seed_run("run-events", "eventful goal", completed=False)
+    
+        from hca.common.enums import EventType  # type: ignore
+        from hca.storage.event_log import append_event  # type: ignore
+    
+        append_event(
+            context,
+            EventType.action_selected,
+            "runtime",
+            {"kind": "echo", "action_id": "action-1"},
+        )
+        append_event(
+            context,
+            EventType.run_completed,
+            "runtime",
+            {"status": "success"},
+        )
+    
+        r = app_client.get("/api/hca/run/run-events/events?limit=10")
+        assert r.status_code == 200
+        data = r.json()
+        assert data["run_id"] == "run-events"
+&gt;       assert data["total"] == 3
+E       assert 30 == 3
+
+backend/tests/test_hca.py:184: AssertionError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_get_run_artifacts_and_detail" time="0.023"><failure message="assert 10 == 1">app_client = &lt;starlette.testclient.TestClient object at 0x10d82f1f0&gt;
+
+    def test_get_run_artifacts_and_detail(app_client):
+        _seed_run("run-artifacts", "artifact goal")
+        _seed_artifact("run-artifacts", "artifact-1", "artifact content")
+    
+        list_response = app_client.get("/api/hca/run/run-artifacts/artifacts")
+        assert list_response.status_code == 200
+        data = list_response.json()
+        assert data["run_id"] == "run-artifacts"
+&gt;       assert data["total"] == 1
+E       assert 10 == 1
+
+backend/tests/test_hca.py:198: AssertionError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_stream_endpoint_emits_done_event_for_successful_run" time="0.322"><failure message="TypeError: read_events() got an unexpected keyword argument 'offset'">+ Exception Group Traceback (most recent call last):
+  |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 79, in collapse_excgroups
+  |     yield
+  |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/responses.py", line 277, in __call__
+  |     await wrap(partial(self.listen_for_disconnect, receive))
+  |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 783, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/_pytest/runner.py", line 344, in from_call
+    |     result: TResult | None = func()
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/_pytest/runner.py", line 246, in &lt;lambda&gt;
+    |     lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/pluggy/_hooks.py", line 512, in __call__
+    |     return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    |     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/pluggy/_callers.py", line 167, in _multicall
+    |     raise exception
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/pluggy/_callers.py", line 139, in _multicall
+    |     teardown.throw(exception)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/_pytest/logging.py", line 850, in pytest_runtest_call
+    |     yield
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/pluggy/_callers.py", line 139, in _multicall
+    |     teardown.throw(exception)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    |     return (yield)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/pluggy/_callers.py", line 139, in _multicall
+    |     teardown.throw(exception)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/_pytest/skipping.py", line 263, in pytest_runtest_call
+    |     return (yield)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/pluggy/_callers.py", line 121, in _multicall
+    |     res = hook_impl.function(*args)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/_pytest/runner.py", line 178, in pytest_runtest_call
+    |     item.runtest()
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/_pytest/python.py", line 1671, in runtest
+    |     self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/pluggy/_hooks.py", line 512, in __call__
+    |     return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    |     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/pluggy/_callers.py", line 167, in _multicall
+    |     raise exception
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/pluggy/_callers.py", line 121, in _multicall
+    |     res = hook_impl.function(*args)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/_pytest/python.py", line 157, in pytest_pyfunc_call
+    |     result = testfunction(**testargs)
+    |   File "/Users/dawsonblock/Downloads/HysightX/backend/tests/test_hca.py", line 214, in test_stream_endpoint_emits_done_event_for_successful_run
+    |     response = app_client.post(
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/testclient.py", line 552, in post
+    |     return super().post(
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1144, in post
+    |     return self.request(
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/testclient.py", line 451, in request
+    |     return super().request(
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/httpx/_client.py", line 825, in request
+    |     return self.send(request, auth=auth, follow_redirects=follow_redirects)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/httpx/_client.py", line 914, in send
+    |     response = self._send_handling_auth(
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    |     response = self._send_handling_redirects(
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    |     response = self._send_single_request(request)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    |     response = transport.handle_request(request)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/testclient.py", line 354, in handle_request
+    |     raise exc
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/testclient.py", line 351, in handle_request
+    |     portal.call(self.app, scope, receive, send)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/anyio/from_thread.py", line 334, in call
+    |     return cast(T_Retval, self.start_task_soon(func, *args).result())
+    |   File "/Users/dawsonblock/.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py", line 445, in result
+    |     return self.__get_result()
+    |   File "/Users/dawsonblock/.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py", line 390, in __get_result
+    |     raise self._exception
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/anyio/from_thread.py", line 259, in _call_func
+    |     retval = await retval_or_awaitable
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/fastapi/applications.py", line 1138, in __call__
+    |     await super().__call__(scope, receive, send)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/applications.py", line 113, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    |     raise exc
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/routing.py", line 716, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/routing.py", line 736, in app
+    |     await route.handle(scope, receive, send)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/routing.py", line 290, in handle
+    |     await self.app(scope, receive, send)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/fastapi/routing.py", line 121, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/fastapi/routing.py", line 108, in app
+    |     await response(scope, receive, send)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/responses.py", line 277, in __call__
+    |     await wrap(partial(self.listen_for_disconnect, receive))
+    |   File "/Users/dawsonblock/.pyenv/versions/3.9.7/lib/python3.9/contextlib.py", line 137, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 85, in collapse_excgroups
+    |     raise exc
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/responses.py", line 273, in wrap
+    |     await func()
+    |   File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/responses.py", line 253, in stream_response
+    |     async for chunk in self.body_iterator:
+    |   File "/Users/dawsonblock/Downloads/HysightX/backend/server_streaming.py", line 123, in generate
+    |     events, event_cursor = read_events(
+    | TypeError: read_events() got an unexpected keyword argument 'offset'
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/dawsonblock/Downloads/HysightX/backend/tests/test_hca.py", line 214, in test_stream_endpoint_emits_done_event_for_successful_run
+    response = app_client.post(
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/testclient.py", line 552, in post
+    return super().post(
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1144, in post
+    return self.request(
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/testclient.py", line 451, in request
+    return super().request(
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/testclient.py", line 354, in handle_request
+    raise exc
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/testclient.py", line 351, in handle_request
+    portal.call(self.app, scope, receive, send)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/anyio/from_thread.py", line 334, in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+  File "/Users/dawsonblock/.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py", line 445, in result
+    return self.__get_result()
+  File "/Users/dawsonblock/.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py", line 390, in __get_result
+    raise self._exception
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/anyio/from_thread.py", line 259, in _call_func
+    retval = await retval_or_awaitable
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/fastapi/applications.py", line 1138, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/fastapi/routing.py", line 121, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/fastapi/routing.py", line 108, in app
+    await response(scope, receive, send)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/responses.py", line 277, in __call__
+    await wrap(partial(self.listen_for_disconnect, receive))
+  File "/Users/dawsonblock/.pyenv/versions/3.9.7/lib/python3.9/contextlib.py", line 137, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/_utils.py", line 85, in collapse_excgroups
+    raise exc
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/responses.py", line 273, in wrap
+    await func()
+  File "/Users/dawsonblock/Downloads/HysightX/.venv/lib/python3.9/site-packages/starlette/responses.py", line 253, in stream_response
+    async for chunk in self.body_iterator:
+  File "/Users/dawsonblock/Downloads/HysightX/backend/server_streaming.py", line 123, in generate
+    events, event_cursor = read_events(
+TypeError: read_events() got an unexpected keyword argument 'offset'
+
+During handling of the above exception, another exception occurred:
+
+app_client = &lt;starlette.testclient.TestClient object at 0x10d528fa0&gt;
+
+    def test_stream_endpoint_emits_done_event_for_successful_run(app_client):
+&gt;       response = app_client.post(
+            "/api/hca/run/stream",
+            json={"goal": "Hello, what can you do?"},
+        )
+
+backend/tests/test_hca.py:214: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.9/site-packages/starlette/testclient.py:552: in post
+    return super().post(
+.venv/lib/python3.9/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+.venv/lib/python3.9/site-packages/starlette/testclient.py:451: in request
+    return super().request(
+.venv/lib/python3.9/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.9/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.9/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.9/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.9/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.9/site-packages/starlette/testclient.py:354: in handle_request
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/testclient.py:351: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:334: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:445: in result
+    return self.__get_result()
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:390: in __get_result
+    raise self._exception
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:259: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.9/site-packages/fastapi/applications.py:1138: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.9/site-packages/starlette/middleware/cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:736: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:290: in handle
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:121: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:108: in app
+    await response(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/responses.py:277: in __call__
+    await wrap(partial(self.listen_for_disconnect, receive))
+../../.pyenv/versions/3.9.7/lib/python3.9/contextlib.py:137: in __exit__
+    self.gen.throw(typ, value, traceback)
+.venv/lib/python3.9/site-packages/starlette/_utils.py:85: in collapse_excgroups
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/responses.py:273: in wrap
+    await func()
+.venv/lib/python3.9/site-packages/starlette/responses.py:253: in stream_response
+    async for chunk in self.body_iterator:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    async def generate():
+        from hca.storage.event_log import read_events  # type: ignore
+    
+        loop = asyncio.get_running_loop()
+        future = loop.run_in_executor(_STREAM_EXECUTOR, _execute)
+    
+        try:
+            yield _sse("status", {"label": "Connecting to agent…", "step": 0})
+    
+            event_cursor = 0
+            run_id: Optional[str] = None
+            step = 1
+    
+            while not result_holder["done"]:
+                await asyncio.sleep(_STREAM_POLL_INTERVAL_SECONDS)
+    
+                if not run_id and result_holder["run_id"]:
+                    run_id = result_holder["run_id"]
+                    yield _sse(
+                        "status",
+                        {
+                            "label": "Pipeline running…",
+                            "step": step,
+                            "run_id": run_id,
+                        },
+                    )
+                    step += 1
+    
+                if run_id:
+&gt;                   events, event_cursor = read_events(
+                        run_id,
+                        offset=event_cursor,
+                    )
+E                   TypeError: read_events() got an unexpected keyword argument 'offset'
+
+backend/server_streaming.py:123: TypeError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_stream_endpoint_emits_error_event_when_runtime_raises" time="0.328" /><testcase classname="backend.tests.test_hca" name="test_stream_endpoint_emits_done_event_for_halted_run" time="0.050"><failure message="NotImplementedError: get_latest_decision is not implemented yet.">app_client = &lt;starlette.testclient.TestClient object at 0x10d1b5d00&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x10dced2b0&gt;
+
+    def test_stream_endpoint_emits_done_event_for_halted_run(app_client, monkeypatch):
+        from hca.runtime.runtime import Runtime  # type: ignore
+    
+&gt;       pending_response = app_client.post(
+            "/api/hca/run",
+            json={"goal": "Please remember that stream denial parity matters"},
+        )
+
+backend/tests/test_hca.py:280: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.9/site-packages/starlette/testclient.py:552: in post
+    return super().post(
+.venv/lib/python3.9/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+.venv/lib/python3.9/site-packages/starlette/testclient.py:451: in request
+    return super().request(
+.venv/lib/python3.9/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.9/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.9/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.9/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.9/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.9/site-packages/starlette/testclient.py:354: in handle_request
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/testclient.py:351: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:334: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:445: in result
+    return self.__get_result()
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:390: in __get_result
+    raise self._exception
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:259: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.9/site-packages/fastapi/applications.py:1138: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.9/site-packages/starlette/middleware/cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:736: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:290: in handle
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:121: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:107: in app
+    response = await f(request)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:426: in app
+    raw_response = await run_endpoint_function(
+.venv/lib/python3.9/site-packages/fastapi/routing.py:314: in run_endpoint_function
+    return await dependant.call(**values)
+backend/server_hca_routes.py:49: in run_hca
+    return extract_run_summary(run_id)
+hca/src/hca/api/run_views.py:257: in extract_run_summary
+    replay = reconstruct_state(run_id)
+hca/src/hca/runtime/replay.py:431: in reconstruct_state
+    approval = _approval_summary(
+hca/src/hca/runtime/replay.py:155: in _approval_summary
+    decision = get_latest_decision(run_id, target)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('288ff891-e8bf-45c9-bd90-104942329f4c', 'e44282c7-6286-412a-acbe-6d33a31f185b')
+kwargs = {}
+
+    def get_latest_decision(*args, **kwargs):
+&gt;       raise NotImplementedError("get_latest_decision is not implemented yet.")
+E       NotImplementedError: get_latest_decision is not implemented yet.
+
+hca/src/hca/storage/approvals.py:31: NotImplementedError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_run_summary_uses_recorded_memory_hits_and_metrics" time="0.026"><failure message="AssertionError: assert None == 'rule_based_fallback'">app_client = &lt;starlette.testclient.TestClient object at 0x10da06af0&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x10db83730&gt;
+
+    def test_run_summary_uses_recorded_memory_hits_and_metrics(
+        app_client,
+        monkeypatch,
+    ):
+        from hca.common.enums import (  # type: ignore
+            EventType,
+            ReceiptStatus,
+            RuntimeState,
+        )
+        from hca.common.types import ExecutionReceipt, RunContext  # type: ignore
+        from hca.storage.event_log import append_event  # type: ignore
+        from hca.storage.receipts import append_receipt  # type: ignore
+        from hca.storage.runs import save_run  # type: ignore
+    
+        context = RunContext(
+            run_id="run-summary-metrics",
+            goal="find the stored API expiry",
+            state=RuntimeState.completed,
+        )
+        save_run(context)
+        append_event(
+            context,
+            EventType.run_created,
+            "runtime",
+            {"goal": context.goal},
+        )
+        append_event(
+            context,
+            EventType.module_proposed,
+            "planner",
+            {
+                "candidate_items": [
+                    {
+                        "kind": "task_plan",
+                        "confidence": 0.73,
+                        "content": {
+                            "strategy": "information_retrieval_strategy",
+                            "action": "echo",
+                            "rationale": "Rule-based replay proof.",
+                            "memory_context_used": True,
+                            "planning_mode": "rule_based_fallback",
+                            "fallback_reason": "llm_error:RuntimeError",
+                            "memory_retrieval_status": "retrieved",
+                            "memory_retrieval_error": None,
+                            "memory_hits": [
+                                {
+                                    "text": "The API key expires on March 1st.",
+                                    "score": 0.98,
+                                    "memory_type": "fact",
+                                    "stored_at": "2026-03-01T00:00:00+00:00",
+                                }
+                            ],
+                            "memory_retrieval_latency_ms": 4.5,
+                        },
+                    }
+                ]
+            },
+        )
+        append_event(
+            context,
+            EventType.module_proposed,
+            "perception_text",
+            {
+                "candidate_items": [
+                    {
+                        "kind": "perceived_intent",
+                        "content": {
+                            "intent_class": "retrieve_memory",
+                            "intent": "retrieve",
+                            "arguments": {"query": context.goal},
+                            "perception_mode": "rule_based_fallback",
+                            "fallback_reason": "llm_error:RuntimeError",
+                            "llm_attempted": True,
+                        },
+                    }
+                ]
+            },
+        )
+        append_event(
+            context,
+            EventType.recurrent_pass_completed,
+            "runtime",
+            {
+                "revision_payloads": [
+                    {
+                        "source_module": "critic",
+                        "critique_items": [
+                            {
+                                "kind": "critic_verdict",
+                                "content": {
+                                    "verdict": "approve",
+                                    "issues": [],
+                                    "confidence_delta": 0.02,
+                                    "rationale": "Replay-backed critic proof.",
+                                    "llm_powered": False,
+                                    "fallback_reason": "rule_based_only",
+                                },
+                            }
+                        ],
+                    }
+                ]
+            },
+        )
+    
+        started_at = datetime.now(timezone.utc)
+        finished_at = started_at + timedelta(milliseconds=25)
+        receipt = ExecutionReceipt(
+            action_id="action-1",
+            action_kind="echo",
+            status=ReceiptStatus.success,
+            started_at=started_at,
+            finished_at=finished_at,
+            outputs={"duration_seconds": 0.025},
+        )
+        append_receipt(context.run_id, receipt.model_dump(mode="json"))
+        append_event(
+            context,
+            EventType.execution_finished,
+            "executor",
+            receipt.model_dump(mode="json"),
+        )
+        append_event(
+            context,
+            EventType.episodic_memory_written,
+            "runtime",
+            {
+                "action_id": "action-1",
+                "subject": "echo",
+                "latency_ms": 1.75,
+            },
+        )
+        append_event(
+            context,
+            EventType.run_completed,
+            "runtime",
+            {"receipt_id": receipt.receipt_id},
+        )
+    
+        import memory_service.singleton as _memory_singleton
+    
+        def _unexpected_memory_lookup():
+            raise AssertionError("run summary performed a live memory lookup")
+    
+        monkeypatch.setattr(
+            _memory_singleton,
+            "get_controller",
+            _unexpected_memory_lookup,
+            raising=False,
+        )
+    
+        response = app_client.get(f"/api/hca/run/{context.run_id}")
+        assert response.status_code == 200
+        data = response.json()
+&gt;       assert data["plan"]["planning_mode"] == "rule_based_fallback"
+E       AssertionError: assert None == 'rule_based_fallback'
+
+backend/tests/test_hca.py:480: AssertionError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_run_summary_surfaces_workflow_outcome_and_critic_scores" time="0.023" /><testcase classname="backend.tests.test_hca" name="test_memory_retrieval_failure_is_explicit_but_nonfatal" time="0.029"><failure message="AssertionError: assert None == 'failed'">app_client = &lt;starlette.testclient.TestClient object at 0x10d11ba60&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x10dbd4ac0&gt;
+
+    def test_memory_retrieval_failure_is_explicit_but_nonfatal(
+        app_client,
+        monkeypatch,
+    ):
+        import memory_service.singleton as memory_singleton
+    
+        def _fail_controller_lookup():
+            raise RuntimeError("memory offline")
+    
+        monkeypatch.setattr(
+            memory_singleton,
+            "get_controller",
+            _fail_controller_lookup,
+        )
+    
+        response = app_client.post(
+            "/api/hca/run",
+            json={"goal": "What facts are stored in memory?"},
+        )
+    
+        assert response.status_code == 200
+        data = response.json()
+        assert data["state"] == "completed"
+&gt;       assert data["plan"]["memory_retrieval_status"] == "failed"
+E       AssertionError: assert None == 'failed'
+
+backend/tests/test_hca.py:625: AssertionError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_approve_rejects_non_pending_approval_without_writing_grant" time="0.020"><failure message="ImportError: cannot import name 'append_request' from 'hca.storage.approvals' (/Users/dawsonblock/Downloads/HysightX/hca/src/hca/storage/approvals.py)">app_client = &lt;starlette.testclient.TestClient object at 0x10d87a1f0&gt;
+
+    def test_approve_rejects_non_pending_approval_without_writing_grant(
+        app_client,
+    ):
+        from hca.common.enums import ActionClass, RuntimeState  # type: ignore
+        from hca.common.types import ApprovalRequest, RunContext  # type: ignore
+&gt;       from hca.storage.approvals import (  # type: ignore
+            append_request,
+            iter_records,
+        )
+E       ImportError: cannot import name 'append_request' from 'hca.storage.approvals' (/Users/dawsonblock/Downloads/HysightX/hca/src/hca/storage/approvals.py)
+
+backend/tests/test_hca.py:639: ImportError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_deny_rejects_non_pending_approval" time="0.019"><failure message="ImportError: cannot import name 'append_request' from 'hca.storage.approvals' (/Users/dawsonblock/Downloads/HysightX/hca/src/hca/storage/approvals.py)">app_client = &lt;starlette.testclient.TestClient object at 0x10d852df0&gt;
+
+    def test_deny_rejects_non_pending_approval(app_client):
+        from hca.common.enums import ActionClass, RuntimeState  # type: ignore
+        from hca.common.types import ApprovalRequest, RunContext  # type: ignore
+&gt;       from hca.storage.approvals import (  # type: ignore
+            append_request,
+            iter_records,
+        )
+E       ImportError: cannot import name 'append_request' from 'hca.storage.approvals' (/Users/dawsonblock/Downloads/HysightX/hca/src/hca/storage/approvals.py)
+
+backend/tests/test_hca.py:680: ImportError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_memory_retrieve_returns_hits_array" time="0.020" /><testcase classname="backend.tests.test_hca" name="test_memory_retrieve_rejects_legacy_query_wrapper" time="0.020" /><testcase classname="backend.tests.test_hca" name="test_memory_retrieve_rejects_blank_query_text" time="0.018" /><testcase classname="backend.tests.test_hca" name="test_memory_retrieve_hit_shape" time="0.019" /><testcase classname="backend.tests.test_hca" name="test_memory_maintain_envelope" time="0.018" /><testcase classname="backend.tests.test_hca" name="test_basic_run_completed" time="0.028"><failure message="AssertionError: assert None is not None&#10; +  where None = &lt;built-in method get of dict object at 0x10cc084c0&gt;('strategy')&#10; +    where &lt;built-in method get of dict object at 0x10cc084c0&gt; = {'action': None, 'confidence': 1.0, 'fallback_reason': None, 'memory_context_used': False, ...}.get&#10; +      where {'action': None, 'confidence': 1.0, 'fallback_reason': None, 'memory_context_used': False, ...} = &lt;built-in method get of dict object at 0x10d389800&gt;('plan', {})&#10; +        where &lt;built-in method get of dict object at 0x10d389800&gt; = {'action_result': {'artifacts': [], 'error': None, 'outputs': {'echo': 'Hello, what can you do?'}, 'status': 'success'...Hello, what can you do?'}, 'kind': 'echo', 'requires_approval': False}, 'active_workflow': None, 'approval': None, ...}.get">app_client = &lt;starlette.testclient.TestClient object at 0x10d2b5790&gt;
+
+    @pytest.mark.slow
+    def test_basic_run_completed(app_client):
+        r = app_client.post(
+            "/api/hca/run",
+            json={"goal": "Hello, what can you do?"},
+        )
+        assert r.status_code == 200
+        data = r.json()
+        assert data.get("state") == "completed"
+&gt;       assert data.get("plan", {}).get("strategy") is not None
+E       AssertionError: assert None is not None
+E        +  where None = &lt;built-in method get of dict object at 0x10cc084c0&gt;('strategy')
+E        +    where &lt;built-in method get of dict object at 0x10cc084c0&gt; = {'action': None, 'confidence': 1.0, 'fallback_reason': None, 'memory_context_used': False, ...}.get
+E        +      where {'action': None, 'confidence': 1.0, 'fallback_reason': None, 'memory_context_used': False, ...} = &lt;built-in method get of dict object at 0x10d389800&gt;('plan', {})
+E        +        where &lt;built-in method get of dict object at 0x10d389800&gt; = {'action_result': {'artifacts': [], 'error': None, 'outputs': {'echo': 'Hello, what can you do?'}, 'status': 'success'...Hello, what can you do?'}, 'kind': 'echo', 'requires_approval': False}, 'active_workflow': None, 'approval': None, ...}.get
+
+backend/tests/test_hca.py:813: AssertionError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_get_run_by_id" time="0.029" /><testcase classname="backend.tests.test_hca" name="test_contract_run_includes_replay_workflow_fields" time="0.062"><failure message="pydantic_core._pydantic_core.PydanticSerializationError: Unable to serialize unknown type: &lt;class 'types.SimpleNamespace'&gt;">app_client = &lt;starlette.testclient.TestClient object at 0x10d4f25b0&gt;
+
+    @pytest.mark.slow
+    def test_contract_run_includes_replay_workflow_fields(app_client):
+&gt;       r = app_client.post(
+            "/api/hca/run",
+            json={
+                "goal": (
+                    "investigate contract mismatch for `RuntimeState` in "
+                    "`hca/src/hca/common/enums.py`"
+                )
+            },
+        )
+
+backend/tests/test_hca.py:881: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.9/site-packages/starlette/testclient.py:552: in post
+    return super().post(
+.venv/lib/python3.9/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+.venv/lib/python3.9/site-packages/starlette/testclient.py:451: in request
+    return super().request(
+.venv/lib/python3.9/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.9/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.9/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.9/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.9/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.9/site-packages/starlette/testclient.py:354: in handle_request
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/testclient.py:351: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:334: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:445: in result
+    return self.__get_result()
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:390: in __get_result
+    raise self._exception
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:259: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.9/site-packages/fastapi/applications.py:1138: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.9/site-packages/starlette/middleware/cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:736: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:290: in handle
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:121: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:107: in app
+    response = await f(request)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:448: in app
+    content = await serialize_response(
+.venv/lib/python3.9/site-packages/fastapi/routing.py:292: in serialize_response
+    return field.serialize(
+.venv/lib/python3.9/site-packages/fastapi/_compat/v2.py:172: in serialize
+    return self._type_adapter.dump_python(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = TypeAdapter(Annotated[hca.api.models.RunSummaryResponse, FieldInfo(annotation=NoneType, required=True)])
+instance = RunSummaryResponse(run_id='d686286f-d668-4799-8cf4-6b926490f2a2', goal='investigate contract mismatch for `RuntimeStat... last_ms=None), memory_commit_latency=RunLatencySummaryResponse(count=14, total_ms=1.78, max_ms=0.191, last_ms=0.121)))
+
+    def dump_python(
+        self,
+        instance: T,
+        /,
+        *,
+        mode: Literal['json', 'python'] = 'python',
+        include: IncEx | None = None,
+        exclude: IncEx | None = None,
+        by_alias: bool | None = None,
+        exclude_unset: bool = False,
+        exclude_defaults: bool = False,
+        exclude_none: bool = False,
+        exclude_computed_fields: bool = False,
+        round_trip: bool = False,
+        warnings: bool | Literal['none', 'warn', 'error'] = True,
+        fallback: Callable[[Any], Any] | None = None,
+        serialize_as_any: bool = False,
+        polymorphic_serialization: bool | None = None,
+        context: Any | None = None,
+    ) -&gt; Any:
+        """Dump an instance of the adapted type to a Python object.
+    
+        Args:
+            instance: The Python object to serialize.
+            mode: The output format.
+            include: Fields to include in the output.
+            exclude: Fields to exclude from the output.
+            by_alias: Whether to use alias names for field names.
+            exclude_unset: Whether to exclude unset fields.
+            exclude_defaults: Whether to exclude fields with default values.
+            exclude_none: Whether to exclude fields with None values.
+            exclude_computed_fields: Whether to exclude computed fields.
+                While this can be useful for round-tripping, it is usually recommended to use the dedicated
+                `round_trip` parameter instead.
+            round_trip: Whether to output the serialized data in a way that is compatible with deserialization.
+            warnings: How to handle serialization errors. False/"none" ignores them, True/"warn" logs errors,
+                "error" raises a [`PydanticSerializationError`][pydantic_core.PydanticSerializationError].
+            fallback: A function to call when an unknown value is encountered. If not provided,
+                a [`PydanticSerializationError`][pydantic_core.PydanticSerializationError] error is raised.
+            serialize_as_any: Whether to serialize fields with duck-typing serialization behavior.
+            polymorphic_serialization: Whether to use model and dataclass polymorphic serialization for this call.
+            context: Additional context to pass to the serializer.
+    
+        Returns:
+            The serialized object.
+        """
+&gt;       return self.serializer.to_python(
+            instance,
+            mode=mode,
+            by_alias=by_alias,
+            include=include,
+            exclude=exclude,
+            exclude_unset=exclude_unset,
+            exclude_defaults=exclude_defaults,
+            exclude_none=exclude_none,
+            exclude_computed_fields=exclude_computed_fields,
+            round_trip=round_trip,
+            warnings=warnings,
+            fallback=fallback,
+            serialize_as_any=serialize_as_any,
+            polymorphic_serialization=polymorphic_serialization,
+            context=context,
+        )
+E       pydantic_core._pydantic_core.PydanticSerializationError: Unable to serialize unknown type: &lt;class 'types.SimpleNamespace'&gt;
+
+.venv/lib/python3.9/site-packages/pydantic/type_adapter.py:607: PydanticSerializationError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_runtime_memory_question_returns_summary" time="0.031" /><testcase classname="backend.tests.test_hca" name="test_runtime_memory_recall_response_not_empty" time="0.033" /><testcase classname="backend.tests.test_hca" name="test_remember_goal_awaiting_approval" time="0.028"><failure message="NotImplementedError: get_latest_decision is not implemented yet.">app_client = &lt;starlette.testclient.TestClient object at 0x10d23b220&gt;
+
+    @pytest.mark.slow
+    def test_remember_goal_awaiting_approval(app_client):
+&gt;       r = app_client.post(
+            "/api/hca/run",
+            json={"goal": "Please remember that testing was done on Feb 2026"},
+        )
+
+backend/tests/test_hca.py:945: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.9/site-packages/starlette/testclient.py:552: in post
+    return super().post(
+.venv/lib/python3.9/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+.venv/lib/python3.9/site-packages/starlette/testclient.py:451: in request
+    return super().request(
+.venv/lib/python3.9/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.9/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.9/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.9/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.9/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.9/site-packages/starlette/testclient.py:354: in handle_request
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/testclient.py:351: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:334: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:445: in result
+    return self.__get_result()
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:390: in __get_result
+    raise self._exception
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:259: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.9/site-packages/fastapi/applications.py:1138: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.9/site-packages/starlette/middleware/cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:736: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:290: in handle
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:121: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:107: in app
+    response = await f(request)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:426: in app
+    raw_response = await run_endpoint_function(
+.venv/lib/python3.9/site-packages/fastapi/routing.py:314: in run_endpoint_function
+    return await dependant.call(**values)
+backend/server_hca_routes.py:49: in run_hca
+    return extract_run_summary(run_id)
+hca/src/hca/api/run_views.py:257: in extract_run_summary
+    replay = reconstruct_state(run_id)
+hca/src/hca/runtime/replay.py:431: in reconstruct_state
+    approval = _approval_summary(
+hca/src/hca/runtime/replay.py:155: in _approval_summary
+    decision = get_latest_decision(run_id, target)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('07f0b06e-6556-4435-8fa3-9778b26696a0', 'a6c8874d-5857-4203-8180-799689f3d613')
+kwargs = {}
+
+    def get_latest_decision(*args, **kwargs):
+&gt;       raise NotImplementedError("get_latest_decision is not implemented yet.")
+E       NotImplementedError: get_latest_decision is not implemented yet.
+
+hca/src/hca/storage/approvals.py:31: NotImplementedError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_approve_action_completes" time="0.027"><failure message="NotImplementedError: get_latest_decision is not implemented yet.">app_client = &lt;starlette.testclient.TestClient object at 0x10d182100&gt;
+
+    @pytest.mark.slow
+    def test_approve_action_completes(app_client):
+&gt;       r = app_client.post(
+            "/api/hca/run",
+            json={"goal": "Please remember that testing was done on Feb 2026"},
+        )
+
+backend/tests/test_hca.py:969: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.9/site-packages/starlette/testclient.py:552: in post
+    return super().post(
+.venv/lib/python3.9/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+.venv/lib/python3.9/site-packages/starlette/testclient.py:451: in request
+    return super().request(
+.venv/lib/python3.9/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.9/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.9/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.9/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.9/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.9/site-packages/starlette/testclient.py:354: in handle_request
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/testclient.py:351: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:334: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:445: in result
+    return self.__get_result()
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:390: in __get_result
+    raise self._exception
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:259: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.9/site-packages/fastapi/applications.py:1138: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.9/site-packages/starlette/middleware/cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:736: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:290: in handle
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:121: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:107: in app
+    response = await f(request)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:426: in app
+    raw_response = await run_endpoint_function(
+.venv/lib/python3.9/site-packages/fastapi/routing.py:314: in run_endpoint_function
+    return await dependant.call(**values)
+backend/server_hca_routes.py:49: in run_hca
+    return extract_run_summary(run_id)
+hca/src/hca/api/run_views.py:257: in extract_run_summary
+    replay = reconstruct_state(run_id)
+hca/src/hca/runtime/replay.py:431: in reconstruct_state
+    approval = _approval_summary(
+hca/src/hca/runtime/replay.py:155: in _approval_summary
+    decision = get_latest_decision(run_id, target)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('2c34d2fa-a733-445a-98e8-85029d36f57b', '5c3016e2-4250-4e51-b0ae-2aaa16c0f243')
+kwargs = {}
+
+    def get_latest_decision(*args, **kwargs):
+&gt;       raise NotImplementedError("get_latest_decision is not implemented yet.")
+E       NotImplementedError: get_latest_decision is not implemented yet.
+
+hca/src/hca/storage/approvals.py:31: NotImplementedError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_deny_action_halts_without_execution" time="0.027"><failure message="NotImplementedError: get_latest_decision is not implemented yet.">app_client = &lt;starlette.testclient.TestClient object at 0x10d23f220&gt;
+
+    @pytest.mark.slow
+    def test_deny_action_halts_without_execution(app_client):
+&gt;       r = app_client.post(
+            "/api/hca/run",
+            json={"goal": "Please remember that testing was done on Feb 2026"},
+        )
+
+backend/tests/test_hca.py:1004: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.9/site-packages/starlette/testclient.py:552: in post
+    return super().post(
+.venv/lib/python3.9/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+.venv/lib/python3.9/site-packages/starlette/testclient.py:451: in request
+    return super().request(
+.venv/lib/python3.9/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.9/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.9/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.9/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.9/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.9/site-packages/starlette/testclient.py:354: in handle_request
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/testclient.py:351: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:334: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:445: in result
+    return self.__get_result()
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:390: in __get_result
+    raise self._exception
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:259: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.9/site-packages/fastapi/applications.py:1138: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.9/site-packages/starlette/middleware/cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:736: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:290: in handle
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:121: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:107: in app
+    response = await f(request)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:426: in app
+    raw_response = await run_endpoint_function(
+.venv/lib/python3.9/site-packages/fastapi/routing.py:314: in run_endpoint_function
+    return await dependant.call(**values)
+backend/server_hca_routes.py:49: in run_hca
+    return extract_run_summary(run_id)
+hca/src/hca/api/run_views.py:257: in extract_run_summary
+    replay = reconstruct_state(run_id)
+hca/src/hca/runtime/replay.py:431: in reconstruct_state
+    approval = _approval_summary(
+hca/src/hca/runtime/replay.py:155: in _approval_summary
+    decision = get_latest_decision(run_id, target)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('dd7ee41c-66dd-446c-b0c0-fde3e81a4b1b', 'd7de48c6-e184-4e31-b8e8-9f243555e69a')
+kwargs = {}
+
+    def get_latest_decision(*args, **kwargs):
+&gt;       raise NotImplementedError("get_latest_decision is not implemented yet.")
+E       NotImplementedError: get_latest_decision is not implemented yet.
+
+hca/src/hca/storage/approvals.py:31: NotImplementedError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_approve_action_recovers_from_stale_run_context" time="0.027"><failure message="NotImplementedError: get_latest_decision is not implemented yet.">app_client = &lt;starlette.testclient.TestClient object at 0x10d9f7df0&gt;
+
+    @pytest.mark.slow
+    def test_approve_action_recovers_from_stale_run_context(app_client):
+        from hca.common.enums import RuntimeState  # type: ignore
+        from hca.storage.runs import load_run, save_run  # type: ignore
+    
+&gt;       response = app_client.post(
+            "/api/hca/run",
+            json={"goal": "Please remember that approvals need recovery tests"},
+        )
+
+backend/tests/test_hca.py:1041: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.9/site-packages/starlette/testclient.py:552: in post
+    return super().post(
+.venv/lib/python3.9/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+.venv/lib/python3.9/site-packages/starlette/testclient.py:451: in request
+    return super().request(
+.venv/lib/python3.9/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.9/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.9/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.9/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.9/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.9/site-packages/starlette/testclient.py:354: in handle_request
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/testclient.py:351: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:334: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:445: in result
+    return self.__get_result()
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:390: in __get_result
+    raise self._exception
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:259: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.9/site-packages/fastapi/applications.py:1138: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.9/site-packages/starlette/middleware/cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:736: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:290: in handle
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:121: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:107: in app
+    response = await f(request)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:426: in app
+    raw_response = await run_endpoint_function(
+.venv/lib/python3.9/site-packages/fastapi/routing.py:314: in run_endpoint_function
+    return await dependant.call(**values)
+backend/server_hca_routes.py:49: in run_hca
+    return extract_run_summary(run_id)
+hca/src/hca/api/run_views.py:257: in extract_run_summary
+    replay = reconstruct_state(run_id)
+hca/src/hca/runtime/replay.py:431: in reconstruct_state
+    approval = _approval_summary(
+hca/src/hca/runtime/replay.py:155: in _approval_summary
+    decision = get_latest_decision(run_id, target)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('499426f6-fb53-4366-9af9-5ebebe4d31a5', '77077b02-f4f1-4b29-910f-2b7fbd512895')
+kwargs = {}
+
+    def get_latest_decision(*args, **kwargs):
+&gt;       raise NotImplementedError("get_latest_decision is not implemented yet.")
+E       NotImplementedError: get_latest_decision is not implemented yet.
+
+hca/src/hca/storage/approvals.py:31: NotImplementedError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_approve_rejects_when_context_is_stale_but_replay_is_terminal" time="0.028"><failure message="NotImplementedError: get_latest_decision is not implemented yet.">app_client = &lt;starlette.testclient.TestClient object at 0x10d6d7fd0&gt;
+
+    @pytest.mark.slow
+    def test_approve_rejects_when_context_is_stale_but_replay_is_terminal(
+        app_client,
+    ):
+        from hca.common.enums import RuntimeState  # type: ignore
+        from hca.storage.runs import load_run, save_run  # type: ignore
+    
+&gt;       response = app_client.post(
+            "/api/hca/run",
+            json={"goal": "Please remember that replay should stay authoritative"},
+        )
+
+backend/tests/test_hca.py:1075: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.9/site-packages/starlette/testclient.py:552: in post
+    return super().post(
+.venv/lib/python3.9/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+.venv/lib/python3.9/site-packages/starlette/testclient.py:451: in request
+    return super().request(
+.venv/lib/python3.9/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv/lib/python3.9/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+.venv/lib/python3.9/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv/lib/python3.9/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+.venv/lib/python3.9/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+.venv/lib/python3.9/site-packages/starlette/testclient.py:354: in handle_request
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/testclient.py:351: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:334: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:445: in result
+    return self.__get_result()
+../../.pyenv/versions/3.9.7/lib/python3.9/concurrent/futures/_base.py:390: in __get_result
+    raise self._exception
+.venv/lib/python3.9/site-packages/anyio/from_thread.py:259: in _call_func
+    retval = await retval_or_awaitable
+.venv/lib/python3.9/site-packages/fastapi/applications.py:1138: in __call__
+    await super().__call__(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv/lib/python3.9/site-packages/starlette/middleware/cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:736: in app
+    await route.handle(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/routing.py:290: in handle
+    await self.app(scope, receive, send)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:121: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv/lib/python3.9/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:107: in app
+    response = await f(request)
+.venv/lib/python3.9/site-packages/fastapi/routing.py:426: in app
+    raw_response = await run_endpoint_function(
+.venv/lib/python3.9/site-packages/fastapi/routing.py:314: in run_endpoint_function
+    return await dependant.call(**values)
+backend/server_hca_routes.py:49: in run_hca
+    return extract_run_summary(run_id)
+hca/src/hca/api/run_views.py:257: in extract_run_summary
+    replay = reconstruct_state(run_id)
+hca/src/hca/runtime/replay.py:431: in reconstruct_state
+    approval = _approval_summary(
+hca/src/hca/runtime/replay.py:155: in _approval_summary
+    decision = get_latest_decision(run_id, target)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('c94fdbca-e115-4561-b348-301b937e9300', 'b182a72f-da39-4136-b8d1-590fa664b8dd')
+kwargs = {}
+
+    def get_latest_decision(*args, **kwargs):
+&gt;       raise NotImplementedError("get_latest_decision is not implemented yet.")
+E       NotImplementedError: get_latest_decision is not implemented yet.
+
+hca/src/hca/storage/approvals.py:31: NotImplementedError</failure></testcase><testcase classname="backend.tests.test_hca" name="test_status_route_returns_503_without_db" time="0.021" /><testcase classname="backend.tests.test_hca" name="test_subsystems_route_surfaces_mode_and_optional_status" time="0.021" /><testcase classname="backend.tests.test_memory" name="test_list_returns_records" time="0.020" /><testcase classname="backend.tests.test_memory" name="test_list_filter_by_type_episode" time="0.019" /><testcase classname="backend.tests.test_memory" name="test_list_pagination" time="0.020" /><testcase classname="backend.tests.test_memory" name="test_record_fields" time="0.019" /><testcase classname="backend.tests.test_memory" name="test_list_invalid_limit_returns_422" time="0.019" /><testcase classname="backend.tests.test_memory" name="test_list_invalid_scope_returns_422" time="0.021" /><testcase classname="backend.tests.test_memory" name="test_delete_nonexistent_returns_404" time="0.021" /><testcase classname="backend.tests.test_memory" name="test_delete_removes_record" time="0.022" /><testcase classname="backend.tests.test_memory" name="test_controller_reload_ignores_truncated_final_record" time="0.002" /><testcase classname="backend.tests.test_memory" name="test_controller_retrieve_prefers_newest_on_tied_scores" time="0.001" /><testcase classname="backend.tests.test_memory" name="test_controller_ingest_rolls_back_on_disk_failure" time="0.001" /><testcase classname="backend.tests.test_memory" name="test_controller_maintain_persists_expired_records_on_reload" time="0.002" /><testcase classname="backend.tests.test_server_bootstrap" name="test_is_workspace_python_path_rejects_transient_directories[.pkg-venv/lib/python3.13/site-packages/example/__init__.py]" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_is_workspace_python_path_rejects_transient_directories[.venv/lib/python3.12/site-packages/pkg.py]" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_is_workspace_python_path_rejects_transient_directories[__pycache__/module.py]" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_is_workspace_python_path_rejects_transient_directories[.pytest_cache/module.py]" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_is_workspace_python_path_rejects_transient_directories[.mypy_cache/module.py]" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_is_workspace_python_path_rejects_transient_directories[.ruff_cache/module.py]" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_is_workspace_python_path_rejects_transient_directories[node_modules/pkg/index.py]" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_is_workspace_python_path_rejects_transient_directories[build/generated.py]" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_is_workspace_python_path_rejects_transient_directories[dist/generated.py]" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_is_workspace_python_path_rejects_transient_directories[target/release/generated.py]" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_is_workspace_python_path_accepts_repo_source_files" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_blocked_workspace_path_components_superset_of_production" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_load_settings_allows_db_disabled_when_env_unset" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_load_settings_rejects_partial_backend_env" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_create_app_returns_fastapi_instance" time="0.017" /><testcase classname="backend.tests.test_server_bootstrap" name="test_root_route_works_without_db" time="0.039" /><testcase classname="backend.tests.test_server_bootstrap" name="test_subsystems_route_reports_supported_python_mode_without_db" time="0.020" /><testcase classname="backend.tests.test_server_bootstrap" name="test_subsystems_route_reports_healthy_when_configured_services_are_ready" time="0.020" /><testcase classname="backend.tests.test_server_bootstrap" name="test_memory_retrieve_route_works_without_db" time="0.018" /><testcase classname="backend.tests.test_server_bootstrap" name="test_memory_route_wrapper_does_not_duplicate_subsystems_guidance" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_load_memory_settings_derives_storage_from_hca_storage_root" time="0.001" /><testcase classname="backend.tests.test_server_bootstrap" name="test_load_memory_settings_rejects_sidecar_url_in_python_mode" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_load_memory_settings_rejects_memory_storage_outside_root" time="0.001" /><testcase classname="backend.tests.test_server_bootstrap" name="test_storage_root_rejects_relative_explicit_path" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_create_app_startup_fails_with_partial_mongo_config" time="0.017" /><testcase classname="backend.tests.test_server_bootstrap" name="test_create_app_startup_fails_with_missing_rust_sidecar_url" time="0.017" /><testcase classname="backend.tests.test_server_bootstrap" name="test_create_app_startup_fails_when_sidecar_health_check_fails" time="0.019" /><testcase classname="backend.tests.test_server_bootstrap" name="test_create_app_rejects_wildcard_cors" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_create_app_rejects_invalid_cors_origin" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_frontend_uses_shared_api_client_only" time="0.014" /><testcase classname="backend.tests.test_server_bootstrap" name="test_launch_surfaces_do_not_start_compatibility_app" time="0.001" /><testcase classname="backend.tests.test_server_bootstrap" name="test_backend_proof_workflow_runs_documented_proof_script" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_frontend_proof_workflow_runs_documented_proof_script" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_frontend_runtime_validation_injects_yarn_user_agent" time="0.001" /><testcase classname="backend.tests.test_server_bootstrap" name="test_frontend_parse_jest_counts_tracks_pending_and_todo_cases" time="0.001" /><testcase classname="backend.tests.test_server_bootstrap" name="test_run_tests_external_receipt_step_requires_fresh_receipt" time="0.002" /><testcase classname="backend.tests.test_server_bootstrap" name="test_run_tests_external_receipt_step_surfaces_failed_receipt_outcome" time="0.001" /><testcase classname="backend.tests.test_server_bootstrap" name="test_run_tests_receipt_scope_metadata_tracks_covered_steps" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_fastapi_entrypoints_are_limited_to_authorized_surfaces" time="0.114" /><testcase classname="backend.tests.test_server_bootstrap" name="test_internal_compatibility_app_routes_are_minimal" time="0.004" /><testcase classname="backend.tests.test_server_bootstrap" name="test_run_view_models_delegate_to_canonical_api_models" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_non_test_code_does_not_append_grants_directly" time="0.074"><failure message="AssertionError: assert ['hca/src/hca.../__init__.py'] == []&#10;  &#10;  Left contains one more item: 'hca/src/hca/storage/__init__.py'&#10;  Use -v to get more diff">def test_non_test_code_does_not_append_grants_directly():
+        offenders = []
+        allowed_paths = {
+            "hca/src/hca/storage/approvals.py",
+        }
+    
+        for path in ROOT.rglob("*.py"):
+            relative_path = path.relative_to(ROOT).as_posix()
+            if not _is_workspace_python_path(relative_path):
+                continue
+            if (
+                "/tests/" in relative_path
+                or relative_path.startswith("backend/tests/")
+            ):
+                continue
+            if relative_path in allowed_paths:
+                continue
+            content = path.read_text(encoding="utf-8")
+            if "append_grant(" in content:
+                offenders.append(relative_path)
+    
+&gt;       assert offenders == []
+E       AssertionError: assert ['hca/src/hca.../__init__.py'] == []
+E         
+E         Left contains one more item: 'hca/src/hca/storage/__init__.py'
+E         Use -v to get more diff
+
+backend/tests/test_server_bootstrap.py:923: AssertionError</failure></testcase><testcase classname="backend.tests.test_server_bootstrap" name="test_python_code_uses_storage_helpers_instead_of_hardcoded_runs_paths" time="0.075" /><testcase classname="backend.tests.test_server_bootstrap" name="test_run_backend_script_sets_explicit_storage_defaults" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_base_compose_does_not_export_sidecar_url" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_makefile_exposes_local_sidecar_port_override" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_bootstrap_contract_and_repo_integrity_sentinel_pin_repo_truth" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_requirements_split_keeps_mongo_support_optional" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_proof_runner_uses_explicit_isolated_storage_env" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_runtime_bootstrap_does_not_inject_hca_source_path" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_proof_wrapper_delegates_to_canonical_proof_runner" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_non_test_python_code_keeps_process_and_network_calls_bounded" time="0.112" /><testcase classname="backend.tests.test_server_bootstrap" name="test_optional_proof_harnesses_and_receipts_are_documented_in_repo_contract" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_runtime_state_paths_remain_gitignored" time="0.000" /><testcase classname="backend.tests.test_server_bootstrap" name="test_sidecar_proof_main_uses_isolated_temp_data_dir" time="0.002" /></testsuite></testsuites>
