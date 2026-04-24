@@ -19,9 +19,9 @@ function renderInboxPanel(overrides = {}) {
     formError: null,
     inboxForm: { agentId: "", goal: "", payload: "{}" },
     inboxItems: [],
-    onCancel: jest.fn(),
-    onCreateInboxItem: jest.fn((event) => event.preventDefault()),
-    onInboxFormChange: jest.fn(),
+    onCancel: vi.fn(),
+    onCreateInboxItem: vi.fn((event) => event.preventDefault()),
+    onInboxFormChange: vi.fn(),
     resourceError: null,
     ...overrides,
   };

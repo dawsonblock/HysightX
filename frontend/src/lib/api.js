@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const configuredBackendUrl = process.env.REACT_APP_BACKEND_URL?.trim();
+const configuredBackendUrl = import.meta.env.VITE_BACKEND_URL?.trim();
 const normalizedBackendUrl = configuredBackendUrl
   ? configuredBackendUrl.replace(/\/+$/, "")
   : "";
@@ -141,10 +141,16 @@ const runSummarySchema = z.object({
   metrics: looseObjectSchema.optional(),
 }).passthrough();
 
-const runListSchema = z.object({
-  records: z.array(runSummarySchema),
-  total: z.number().int().nonnegative(),
-}).passthrough();
+const runListSchema = z.union([
+  z.object({
+    records: z.array(runSummarySchema),
+    total: z.number().int().nonnegative(),
+  }).passthrough(),
+  z.object({
+    runs: z.array(z.any()),
+    total: z.number().int().nonnegative().optional(),
+  }).passthrough(),
+]);
 
 const runEventSchema = z.object({
   event_id: z.string(),
@@ -350,8 +356,8 @@ export function getSubsystems() {
   return fetchJson("/subsystems", undefined, subsystemsResponseSchema);
 }
 
-export function listRuns({ query, limit, offset }) {
-  return fetchJson(
+export async function listRuns({ query, limit, offset }) {
+  const data = await fetchJson(
     `/hca/runs${buildQuery({
       q: typeof query === "string" ? query.trim() : undefined,
       limit,
@@ -360,15 +366,19 @@ export function listRuns({ query, limit, offset }) {
     undefined,
     runListSchema
   );
+  if (data && Array.isArray(data.runs) && !data.records) {
+    return { records: data.runs, total: data.total ?? data.runs.length };
+  }
+  return data;
 }
 
 export function getRunSummary(runId) {
-  return fetchJson(`/hca/run/${encodeSegment(runId)}`, undefined, runSummarySchema);
+  return fetchJson(`/runs/${encodeSegment(runId)}`, undefined, runSummarySchema);
 }
 
 export function listRunEvents(runId, { limit, offset } = {}) {
   return fetchJson(
-    `/hca/run/${encodeSegment(runId)}/events${buildQuery({
+    `/runs/${encodeSegment(runId)}/events${buildQuery({
       limit,
       offset,
     })}`,
@@ -379,7 +389,7 @@ export function listRunEvents(runId, { limit, offset } = {}) {
 
 export function listRunArtifacts(runId, { limit, offset } = {}) {
   return fetchJson(
-    `/hca/run/${encodeSegment(runId)}/artifacts${buildQuery({
+    `/runs/${encodeSegment(runId)}/artifacts${buildQuery({
       limit,
       offset,
     })}`,
@@ -394,7 +404,7 @@ export function getRunArtifactDetail(
   { previewBytes } = {}
 ) {
   return fetchJson(
-    `/hca/run/${encodeSegment(runId)}/artifacts/${encodeSegment(
+    `/runs/${encodeSegment(runId)}/artifacts/${encodeSegment(
       artifactId
     )}${buildQuery({ preview_bytes: previewBytes })}`,
     undefined,

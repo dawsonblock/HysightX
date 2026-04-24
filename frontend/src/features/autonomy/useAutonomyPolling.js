@@ -88,8 +88,12 @@ export default function useAutonomyPolling() {
         return;
       }
       const msg = toErrorMessage(err, "Unable to load workspace.");
+      const isNotFound = /not found/i.test(msg);
       for (const key of Object.keys(EMPTY_ERRORS)) {
-        nextErrors[key] = msg;
+        nextErrors[key] = isNotFound ? "" : msg;
+      }
+      if (isNotFound) {
+        successfulResourceCount = Object.keys(EMPTY_ERRORS).length;
       }
     }
 

@@ -31,7 +31,7 @@ except ModuleNotFoundError:  # pragma: no cover - package import fallback
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 FRONTEND_ROOT = REPO_ROOT / "frontend"
 PROOF_RECEIPT_PATH = REPO_ROOT / "artifacts" / "proof" / "frontend.json"
-JEST_REPORT_PATH = REPO_ROOT / "test_reports" / "frontend-jest.json"
+VITEST_REPORT_PATH = REPO_ROOT / "test_reports" / "frontend-vitest.json"
 FIXTURE_JUNIT_PATH = REPO_ROOT / "test_reports" / "frontend-fixture-drift.xml"
 EXPECTED_NODE_MAJOR = 24
 EXPECTED_YARN_VERSION = "1.22.22"
@@ -248,9 +248,9 @@ def _proof_scope_metadata(
 
 def _require_installed_dependencies() -> None:
     sentinels = [
-        FRONTEND_ROOT / "node_modules" / ".bin" / "craco",
-        FRONTEND_ROOT / "node_modules" / ".bin" / "craco.cmd",
-        FRONTEND_ROOT / "node_modules" / "react-scripts" / "package.json",
+        FRONTEND_ROOT / "node_modules" / ".bin" / "vite",
+        FRONTEND_ROOT / "node_modules" / ".bin" / "vitest",
+        FRONTEND_ROOT / "node_modules" / "vite" / "package.json",
     ]
     if not any(path.exists() for path in sentinels):
         raise FrontendProofError(
@@ -259,13 +259,31 @@ def _require_installed_dependencies() -> None:
         )
 
 
-def _parse_jest_counts(
+def _parse_vitest_counts(
     report_path: pathlib.Path,
 ) -> tuple[Dict[str, int], List[Dict[str, str]], Dict[str, Any]]:
+    """Parse Vitest JSON reporter output (vitest --reporter=json).
+
+    Vitest JSON structure:
+      {
+        "numTotalTests": N,
+        "numPassedTests": N,
+        "numFailedTests": N,
+        "numPendingTests": N,
+        "numTodoTests": N,
+        "numTotalTestSuites": N,
+        "numPassedTestSuites": N,
+        "numFailedTestSuites": N,
+        "success": bool,
+        "testResults": [
+          { "name": "...", "assertionResults": [ {"status": ..., "fullName": ...} ] }
+        ]
+      }
+    """
     counts = empty_test_counts()
     if not report_path.exists():
         raise FrontendProofError(
-            f"Jest report was not written to {report_path.relative_to(REPO_ROOT)}."
+            f"Vitest report was not written to {report_path.relative_to(REPO_ROOT)}."
         )
 
     payload = json.loads(report_path.read_text(encoding="utf-8"))
@@ -275,14 +293,14 @@ def _parse_jest_counts(
         payload.get("numTodoTests", 0)
     )
     counts["failed_test_count"] = int(payload.get("numFailedTests", 0))
-    counts["error_test_count"] = int(payload.get("numRuntimeErrorTestSuites", 0))
+    counts["error_test_count"] = int(payload.get("numFailedTestSuites", 0))
 
     skipped_cases: List[Dict[str, str]] = []
     for suite in payload.get("testResults", []):
         suite_name = suite.get("name", "")
         for assertion in suite.get("assertionResults", []):
             status = assertion.get("status")
-            if status not in {"pending", "todo"}:
+            if status not in {"pending", "todo", "skipped"}:
                 continue
             skipped_cases.append(
                 {
@@ -296,7 +314,7 @@ def _parse_jest_counts(
         "num_total_test_suites": int(payload.get("numTotalTestSuites", 0)),
         "num_passed_test_suites": int(payload.get("numPassedTestSuites", 0)),
         "num_failed_test_suites": int(payload.get("numFailedTestSuites", 0)),
-        "num_runtime_error_test_suites": int(payload.get("numRuntimeErrorTestSuites", 0)),
+        "num_runtime_error_test_suites": 0,
         "success": bool(payload.get("success", False)),
     }
     return counts, skipped_cases, metadata
@@ -312,10 +330,10 @@ def main() -> int:
     yarn_version = "unknown"
 
     PROOF_RECEIPT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    JEST_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    VITEST_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     FIXTURE_JUNIT_PATH.parent.mkdir(parents=True, exist_ok=True)
     PROOF_RECEIPT_PATH.unlink(missing_ok=True)
-    JEST_REPORT_PATH.unlink(missing_ok=True)
+    VITEST_REPORT_PATH.unlink(missing_ok=True)
     FIXTURE_JUNIT_PATH.unlink(missing_ok=True)
 
     try:
@@ -384,39 +402,37 @@ def main() -> int:
         if lint_result.returncode != 0:
             raise FrontendProofError("Frontend lint failed.")
 
-        jest_command = [
+        vitest_command = [
             "yarn",
             "test",
-            "--watch=false",
-            "--runInBand",
-            "--json",
-            f"--outputFile={JEST_REPORT_PATH}",
+            "--reporter=json",
+            f"--outputFile={VITEST_REPORT_PATH}",
         ]
-        jest_env = dict(os.environ)
-        jest_env["CI"] = "true"
-        jest_result = _run_command(
+        vitest_env = dict(os.environ)
+        vitest_env["CI"] = "true"
+        vitest_result = _run_command(
             name="Frontend tests",
-            command=jest_command,
+            command=vitest_command,
             cwd=FRONTEND_ROOT,
-            env=jest_env,
+            env=vitest_env,
         )
-        jest_counts, jest_skipped, jest_metadata = _parse_jest_counts(JEST_REPORT_PATH)
+        vitest_counts, vitest_skipped, vitest_metadata = _parse_vitest_counts(VITEST_REPORT_PATH)
         stage_results.append(
             {
-                "name": "jest",
-                "command": _command_string(jest_command),
-                "returncode": jest_result.returncode,
-                "status": "passed" if jest_result.returncode == 0 else "failed",
-                "counts": jest_counts,
-                "report": str(JEST_REPORT_PATH.relative_to(REPO_ROOT)),
-                "metadata": jest_metadata,
-                "stdout_tail": _tail_text(jest_result.stdout),
-                "stderr_tail": _tail_text(jest_result.stderr),
+                "name": "vitest",
+                "command": _command_string(vitest_command),
+                "returncode": vitest_result.returncode,
+                "status": "passed" if vitest_result.returncode == 0 else "failed",
+                "counts": vitest_counts,
+                "report": str(VITEST_REPORT_PATH.relative_to(REPO_ROOT)),
+                "metadata": vitest_metadata,
+                "stdout_tail": _tail_text(vitest_result.stdout),
+                "stderr_tail": _tail_text(vitest_result.stderr),
             }
         )
-        counts = merge_test_counts(counts, jest_counts)
-        skipped_cases.extend(jest_skipped)
-        if jest_result.returncode != 0:
+        counts = merge_test_counts(counts, vitest_counts)
+        skipped_cases.extend(vitest_skipped)
+        if vitest_result.returncode != 0:
             raise FrontendProofError("Frontend tests failed.")
 
         build_command = ["yarn", "build"]

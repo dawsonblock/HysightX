@@ -7,14 +7,14 @@ import {
   toErrorMessage,
 } from "@/lib/api";
 
-jest.mock("react-markdown", () => ({ children }) => <div>{children}</div>);
-jest.mock("remark-gfm", () => () => null);
+vi.mock("react-markdown", () => ({ default: ({ children }) => <div>{children}</div> }));
+vi.mock("remark-gfm", () => ({ default: () => null }));
 
-jest.mock("@/lib/api", () => ({
-  decideRunApproval: jest.fn(),
-  getResponseErrorMessage: jest.fn(async () => "Request failed."),
-  streamRun: jest.fn(),
-  toErrorMessage: jest.fn((error, fallback) => error?.message || fallback),
+vi.mock("@/lib/api", () => ({
+  decideRunApproval: vi.fn(),
+  getResponseErrorMessage: vi.fn(async () => "Request failed."),
+  streamRun: vi.fn(),
+  toErrorMessage: vi.fn((error, fallback) => error?.message || fallback),
 }));
 
 function createStreamResponse(chunks) {
@@ -25,7 +25,7 @@ function createStreamResponse(chunks) {
     body: {
       getReader() {
         return {
-          read: jest.fn().mockImplementation(() => {
+          read: vi.fn().mockImplementation(() => {
             if (index < chunks.length) {
               const value = Uint8Array.from(Buffer.from(chunks[index], "utf8"));
               index += 1;
@@ -141,12 +141,12 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 test("renders the rich operator summary after a streamed run completes", async () => {
   const user = userEvent.setup();
-  const onRunObserved = jest.fn();
+  const onRunObserved = vi.fn();
 
   streamRun.mockResolvedValue(
     createStreamResponse([
@@ -163,7 +163,7 @@ test("renders the rich operator summary after a streamed run completes", async (
   render(
     <HCAChat
       memPanelOpen={false}
-      onToggleMemPanel={jest.fn()}
+      onToggleMemPanel={vi.fn()}
       onRunObserved={onRunObserved}
     />
   );

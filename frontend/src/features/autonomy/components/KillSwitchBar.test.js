@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import KillSwitchBar from "@/features/autonomy/components/KillSwitchBar";
 
 function renderKillSwitchBar(overrides = {}) {
-  const { onSetKillSwitch = jest.fn(), ...rest } = overrides;
+  const { onSetKillSwitch = vi.fn(), ...rest } = overrides;
 
   const baseProps = {
     actionKey: "",

@@ -35,7 +35,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
-    "cra-template": "1.2.0",
+    "@tanstack/react-query": "^5.74.4",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
@@ -48,7 +48,6 @@
     "react-markdown": "^10.1.0",
     "react-resizable-panels": "^3.0.1",
     "react-router-dom": "^7.5.1",
-    "react-scripts": "5.0.1",
     "recharts": "^3.6.0",
     "remark-gfm": "^4.0.1",
     "sonner": "^2.0.3",
@@ -59,9 +58,11 @@
   },
   "scripts": {
     "preinstall": "node ./scripts/verify-runtime.js",
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
+    "start": "vite --host 0.0.0.0",
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
     "lint": "eslint ."
   },
   "engines": {
@@ -73,22 +74,9 @@
     "yarn": "1.22.22"
   },
   "proxy": "http://localhost:8000",
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@craco/craco": "^7.1.0",
-    "@emergentbase/visual-edits": "https://assets.emergent.sh/npm/emergentbase-visual-edits-1.0.8.tgz",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/coverage-v8": "^3.1.2",
     "@eslint/js": "9.23.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -96,6 +84,9 @@
     "@testing-library/user-event": "^14.6.1",
     "autoprefixer": "^10.4.20",
     "dotenv": "^16.4.7",
+    "jsdom": "^25.0.1",
+    "vite": "^6.3.3",
+    "vitest": "^3.1.2",
     "eslint": "9.23.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-jsx-a11y": "6.10.2",

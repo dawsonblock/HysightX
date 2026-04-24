@@ -28,7 +28,7 @@ function renderAutonomyRunsPanel(overrides = {}) {
         status: "awaiting_approval",
       },
     },
-    onOpenRun: jest.fn(),
+    onOpenRun: vi.fn(),
     resourceErrors: {
       runs: "Runs degraded",
     },

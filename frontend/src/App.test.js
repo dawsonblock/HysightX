@@ -1,7 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import App from "@/App";
 
-jest.mock("react-router-dom", () => ({
+vi.mock("react-router-dom", () => ({
   __esModule: true,
   BrowserRouter: function MockBrowserRouter({ children }) {
     return <>{children}</>;
@@ -14,7 +15,7 @@ jest.mock("react-router-dom", () => ({
   },
 }), { virtual: true });
 
-jest.mock("@/components/HCAChat", () => ({
+vi.mock("@/components/HCAChat", () => ({
   __esModule: true,
   default: function MockHCAChat({ onRunObserved, onToggleMemPanel }) {
     return (
@@ -26,7 +27,7 @@ jest.mock("@/components/HCAChat", () => ({
   },
 }));
 
-jest.mock("@/components/OperatorConsole", () => ({
+vi.mock("@/components/OperatorConsole", () => ({
   __esModule: true,
   default: function MockOperatorConsole({ selectedRunId, onSelectRun, refreshToken }) {
     return (
@@ -39,7 +40,7 @@ jest.mock("@/components/OperatorConsole", () => ({
   },
 }));
 
-jest.mock("@/components/MemoryBrowser", () => ({
+vi.mock("@/components/MemoryBrowser", () => ({
   __esModule: true,
   default: function MockMemoryBrowser({ open, onClose, variant = "modal" }) {
     if (!open) {
@@ -56,7 +57,7 @@ jest.mock("@/components/MemoryBrowser", () => ({
   },
 }));
 
-jest.mock("@/features/autonomy/AutonomyWorkspace", () => ({
+vi.mock("@/features/autonomy/AutonomyWorkspace", () => ({
   __esModule: true,
   default: function MockAutonomyWorkspace({ onOpenRun, selectedRunId }) {
     return (
@@ -68,14 +69,12 @@ jest.mock("@/features/autonomy/AutonomyWorkspace", () => ({
   },
 }));
 
-jest.mock("@/components/ui/toaster", () => ({
+vi.mock("@/components/ui/toaster", () => ({
   __esModule: true,
   Toaster: function MockToaster() {
     return null;
   },
 }));
-
-const App = require("@/App").default;
 
 beforeEach(() => {
   window.localStorage.clear();

@@ -20,7 +20,7 @@ const CHECKPOINT_FIXTURE = {
 function renderCheckpointsPanel(overrides = {}) {
   const props = {
     checkpoints: [],
-    onOpenRun: jest.fn(),
+    onOpenRun: vi.fn(),
     resourceError: null,
     ...overrides,
   };

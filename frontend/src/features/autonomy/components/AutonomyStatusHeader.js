@@ -85,7 +85,7 @@ export default function AutonomyStatusHeader({ autonomyStatus, budgets, loading,
           />
         </div>
       ) : (
-        <PanelMessage text="No autonomy status returned by the backend." tone="error" />
+        <PanelMessage text="No autonomy status available." />
       )}
     </section>
   );

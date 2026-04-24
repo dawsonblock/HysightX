@@ -8,10 +8,10 @@ import {
   toErrorMessage,
 } from "@/lib/api";
 
-jest.mock("@/lib/api", () => ({
-  deleteMemoryRecord: jest.fn(),
-  listMemories: jest.fn(),
-  toErrorMessage: jest.fn((error, fallback) => error?.message || fallback),
+vi.mock("@/lib/api", () => ({
+  deleteMemoryRecord: vi.fn(),
+  listMemories: vi.fn(),
+  toErrorMessage: vi.fn((error, fallback) => error?.message || fallback),
 }));
 
 const MEMORY_RESPONSE = MEMORY_LIST_FIXTURE;
@@ -23,12 +23,12 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 test("shows a selected memory inspector and closes on Escape", async () => {
   const user = userEvent.setup();
-  const onClose = jest.fn();
+  const onClose = vi.fn();
 
   render(<MemoryBrowser open onClose={onClose} />);
 
@@ -52,7 +52,7 @@ test("shows a selected memory inspector and closes on Escape", async () => {
 });
 
 test("supports an embedded workspace mode without modal dismissal", async () => {
-  const onClose = jest.fn();
+  const onClose = vi.fn();
 
   render(<MemoryBrowser open onClose={onClose} variant="embedded" />);
 

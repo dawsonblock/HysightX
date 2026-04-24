@@ -14,7 +14,7 @@ const ESCALATION_FIXTURE = {
 function renderEscalationsPanel(overrides = {}) {
   const props = {
     escalations: [],
-    onOpenRun: jest.fn(),
+    onOpenRun: vi.fn(),
     resourceError: null,
     ...overrides,
   };

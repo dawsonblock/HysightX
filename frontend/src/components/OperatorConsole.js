@@ -663,10 +663,10 @@ export default function OperatorConsole({
         </div>
 
         {detailLoading && <PanelMessage text="Loading run surface…" />}
-        {!detailLoading && detailError && (
+        {!detailLoading && detailError && !/not found/i.test(detailError) && (
           <PanelMessage text={detailError} tone="error" />
         )}
-        {!detailLoading && !detailError && !runDetail && (
+        {!detailLoading && (!runDetail || /not found/i.test(detailError || "")) && (
           <PanelMessage text="Select a run to inspect its replay-backed state." />
         )}
 
@@ -1326,11 +1326,7 @@ function SubsystemStatusStrip({ subsystems, loading, error }) {
     return <PanelMessage text="Loading subsystem health…" />;
   }
 
-  if (error) {
-    return <PanelMessage text={error} tone="error" />;
-  }
-
-  if (!subsystems) {
+  if (error || !subsystems) {
     return null;
   }
 

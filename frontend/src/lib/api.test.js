@@ -10,16 +10,16 @@ import {
   SUBSYSTEMS_FIXTURE,
 } from "@/lib/api.fixtures";
 
-function loadApiModule(backendUrl) {
-  jest.resetModules();
+async function loadApiModule(backendUrl) {
+  vi.resetModules();
 
   if (backendUrl === undefined) {
-    delete process.env.REACT_APP_BACKEND_URL;
+    vi.unstubAllEnvs();
   } else {
-    process.env.REACT_APP_BACKEND_URL = backendUrl;
+    vi.stubEnv("VITE_BACKEND_URL", backendUrl);
   }
 
-  return require("@/lib/api");
+  return import("@/lib/api");
 }
 
 function createJsonResponse(payload, { ok = true, status = 200, statusText = "OK" } = {}) {
@@ -27,38 +27,32 @@ function createJsonResponse(payload, { ok = true, status = 200, statusText = "OK
     ok,
     status,
     statusText,
-    text: jest.fn().mockResolvedValue(JSON.stringify(payload)),
+    text: vi.fn().mockResolvedValue(JSON.stringify(payload)),
   };
 }
 
 describe("frontend API client boundary", () => {
   const originalFetch = global.fetch;
-  const originalBackendUrl = process.env.REACT_APP_BACKEND_URL;
 
   beforeEach(() => {
-    global.fetch = jest.fn();
+    global.fetch = vi.fn();
   });
 
   afterEach(() => {
-    if (originalBackendUrl === undefined) {
-      delete process.env.REACT_APP_BACKEND_URL;
-    } else {
-      process.env.REACT_APP_BACKEND_URL = originalBackendUrl;
-    }
-
     global.fetch = originalFetch;
-    jest.clearAllMocks();
+    vi.clearAllMocks();
+    vi.unstubAllEnvs();
   });
 
-  test("normalizes the configured backend URL into the shared API base", () => {
-    const { API_BASE_URL, apiUrl } = loadApiModule("https://backend.example.test///");
+  test("normalizes the configured backend URL into the shared API base", async () => {
+    const { API_BASE_URL, apiUrl } = await loadApiModule("https://backend.example.test///");
 
     expect(API_BASE_URL).toBe("https://backend.example.test/api");
     expect(apiUrl("hca/run")).toBe("https://backend.example.test/api/hca/run");
   });
 
   test("listRuns sends the canonical query parameters and validates the response", async () => {
-    const { listRuns } = loadApiModule();
+    const { listRuns } = await loadApiModule();
 
     global.fetch.mockResolvedValue(createJsonResponse(RUN_LIST_FIXTURE));
 
@@ -73,7 +67,7 @@ describe("frontend API client boundary", () => {
   });
 
   test("getRunSummary validates a realistic replay-backed run payload", async () => {
-    const { getRunSummary } = loadApiModule();
+    const { getRunSummary } = await loadApiModule();
 
     global.fetch.mockResolvedValue(createJsonResponse(RUN_SUMMARY_FIXTURE));
 
@@ -86,7 +80,7 @@ describe("frontend API client boundary", () => {
   });
 
   test("decideRunApproval posts to the canonical approval route and validates the summary", async () => {
-    const { decideRunApproval } = loadApiModule();
+    const { decideRunApproval } = await loadApiModule();
 
     global.fetch.mockResolvedValue(createJsonResponse(RUN_APPROVED_SUMMARY_FIXTURE));
 
@@ -110,7 +104,7 @@ describe("frontend API client boundary", () => {
   });
 
   test("listRunEvents validates the event boundary", async () => {
-    const { listRunEvents } = loadApiModule();
+    const { listRunEvents } = await loadApiModule();
 
     global.fetch.mockResolvedValue(createJsonResponse(RUN_EVENTS_FIXTURE));
 
@@ -125,7 +119,7 @@ describe("frontend API client boundary", () => {
   });
 
   test("artifact list and detail helpers validate realistic payloads", async () => {
-    const { getRunArtifactDetail, listRunArtifacts } = loadApiModule();
+    const { getRunArtifactDetail, listRunArtifacts } = await loadApiModule();
 
     global.fetch
       .mockResolvedValueOnce(createJsonResponse(RUN_ARTIFACTS_FIXTURE))
@@ -151,7 +145,7 @@ describe("frontend API client boundary", () => {
   });
 
   test("getSubsystems reads the canonical subsystem endpoint and validates the response", async () => {
-    const { getSubsystems } = loadApiModule();
+    const { getSubsystems } = await loadApiModule();
 
     global.fetch.mockResolvedValue(createJsonResponse(SUBSYSTEMS_FIXTURE));
 
@@ -178,7 +172,7 @@ describe("frontend API client boundary", () => {
   });
 
   test("memory list and delete helpers validate realistic payloads", async () => {
-    const { deleteMemoryRecord, listMemories } = loadApiModule();
+    const { deleteMemoryRecord, listMemories } = await loadApiModule();
 
     global.fetch
       .mockResolvedValueOnce(createJsonResponse(MEMORY_LIST_FIXTURE))
@@ -202,8 +196,8 @@ describe("frontend API client boundary", () => {
   });
 
   test("fetchJson rejects an unexpected response shape from the backend boundary", async () => {
-    const { fetchJson } = loadApiModule();
-    const { z } = require("zod");
+    const { fetchJson } = await loadApiModule();
+    const { z } = await import("zod");
 
     global.fetch.mockResolvedValue(
       createJsonResponse({ run_id: 7 })

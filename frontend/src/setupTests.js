@@ -1,4 +1,4 @@
-import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/vitest";
 import { TextDecoder, TextEncoder } from "util";
 
 if (!window.TextEncoder) {
@@ -18,5 +18,5 @@ if (!globalThis.TextDecoder) {
 }
 
 if (!window.HTMLElement.prototype.scrollIntoView) {
-	window.HTMLElement.prototype.scrollIntoView = jest.fn();
+	window.HTMLElement.prototype.scrollIntoView = vi.fn();
 }

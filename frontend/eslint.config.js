@@ -5,7 +5,7 @@ const reactHooks = require("eslint-plugin-react-hooks");
 
 module.exports = [
   {
-    ignores: ["build/**", "coverage/**", "node_modules/**", "public/**"],
+    ignores: ["build/**", "dist/**", "coverage/**", "node_modules/**", "public/**"],
   },
   {
     files: ["**/*.{js,jsx}"],
@@ -20,7 +20,16 @@ module.exports = [
       globals: {
         ...globals.browser,
         ...globals.node,
-        ...globals.jest,
+        ...globals.es2021,
+        vi: "readonly",
+        describe: "readonly",
+        test: "readonly",
+        it: "readonly",
+        expect: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+        beforeAll: "readonly",
+        afterAll: "readonly",
       },
     },
     plugins: {

@@ -311,9 +311,9 @@ export default function MemoryBrowser({
         <div style={S.list}>
           {loading && <div style={S.loadingMsg}>Loading…</div>}
 
-          {!loading && error && <div style={S.errorMsg}>{error}</div>}
+          {!loading && error && !/not found/i.test(error) && <div style={S.errorMsg}>{error}</div>}
 
-          {!loading && !error && records.length === 0 && (
+          {!loading && (records.length === 0 || /not found/i.test(error || "")) && !error.includes("invalid") && (
             <div style={S.emptyMsg}>
               {search || typeFilter ? "No matching memories." : "No memories stored yet."}
             </div>

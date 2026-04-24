@@ -14,19 +14,19 @@ import {
 } from "@/lib/api";
 import { toast } from "@/hooks/use-toast";
 
-jest.mock("@/lib/api", () => ({
-  decideRunApproval: jest.fn(),
-  getRunArtifactDetail: jest.fn(),
-  getSubsystems: jest.fn(),
-  getRunSummary: jest.fn(),
-  listRunArtifacts: jest.fn(),
-  listRunEvents: jest.fn(),
-  listRuns: jest.fn(),
-  toErrorMessage: jest.fn((error, fallback) => error?.message || fallback),
+vi.mock("@/lib/api", () => ({
+  decideRunApproval: vi.fn(),
+  getRunArtifactDetail: vi.fn(),
+  getSubsystems: vi.fn(),
+  getRunSummary: vi.fn(),
+  listRunArtifacts: vi.fn(),
+  listRunEvents: vi.fn(),
+  listRuns: vi.fn(),
+  toErrorMessage: vi.fn((error, fallback) => error?.message || fallback),
 }));
 
-jest.mock("@/hooks/use-toast", () => ({
-  toast: jest.fn(),
+vi.mock("@/hooks/use-toast", () => ({
+  toast: vi.fn(),
 }));
 
 const RUN_RECORDS = [
@@ -427,7 +427,7 @@ const RUN_AWAITING_ARTIFACTS = {
 function renderConsole({
   activeTab = null,
   selectedRunId = "run-completed",
-  onRunObserved = jest.fn(),
+  onRunObserved = vi.fn(),
 } = {}) {
   if (activeTab) {
     window.localStorage.setItem("hysight:operator-tab", activeTab);
@@ -436,7 +436,7 @@ function renderConsole({
   return render(
     <OperatorConsole
       selectedRunId={selectedRunId}
-      onSelectRun={jest.fn()}
+      onSelectRun={vi.fn()}
       refreshToken={0}
       onRunObserved={onRunObserved}
     />
@@ -467,7 +467,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 test("renders replay-backed overview fields and filters the run list", async () => {
@@ -626,7 +626,7 @@ test("filters artifacts and loads the selected artifact detail", async () => {
 
 test("allows approving a pending run directly from the replay console", async () => {
   const user = userEvent.setup();
-  const onRunObserved = jest.fn();
+  const onRunObserved = vi.fn();
 
   decideRunApproval.mockResolvedValue(RUN_APPROVED_DETAIL);
 
@@ -650,7 +650,7 @@ test("allows approving a pending run directly from the replay console", async ()
 
 test("allows denying a pending run directly from the replay console", async () => {
   const user = userEvent.setup();
-  const onRunObserved = jest.fn();
+  const onRunObserved = vi.fn();
 
   decideRunApproval.mockResolvedValue(RUN_DENIED_DETAIL);
 

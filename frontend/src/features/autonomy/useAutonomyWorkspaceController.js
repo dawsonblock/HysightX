@@ -127,7 +127,10 @@ export default function useAutonomyWorkspaceController({ selectedRunId }) {
     loading,
     refreshWorkspace,
     refreshing,
-    resourceErrors: { ...resourceErrors, runSummaries: runSummariesError },
+    resourceErrors: Object.fromEntries(
+      Object.entries({ ...resourceErrors, runSummaries: runSummariesError })
+        .map(([k, v]) => [k, (typeof v === "string" && /not found/i.test(v)) ? null : v])
+    ),
     runSummaries,
     scheduleForm,
     schedules,

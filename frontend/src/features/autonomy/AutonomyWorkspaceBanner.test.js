@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import AutonomyWorkspace from "@/features/autonomy/AutonomyWorkspace";
 import useAutonomyWorkspaceController from "@/features/autonomy/useAutonomyWorkspaceController";
 
-jest.mock("@/features/autonomy/useAutonomyWorkspaceController", () => jest.fn());
+vi.mock("@/features/autonomy/useAutonomyWorkspaceController", () => ({ default: vi.fn() }));
 
 function buildControllerState(overrides = {}) {
   return {
@@ -55,19 +55,19 @@ function buildControllerState(overrides = {}) {
     escalations: [],
     escalationCountByAgent: {},
     formErrors: { agent: "", schedule: "", inbox: "" },
-    handleAgentFormChange: jest.fn(),
-    handleCancelInboxItem: jest.fn(),
-    handleCreateAgent: jest.fn(),
-    handleCreateInboxItem: jest.fn(),
-    handleCreateSchedule: jest.fn(),
-    handleDisableSchedule: jest.fn(),
-    handleEnableSchedule: jest.fn(),
-    handleInboxFormChange: jest.fn(),
-    handleKillSwitchChange: jest.fn(),
-    handlePauseAgent: jest.fn(),
-    handleResumeAgent: jest.fn(),
-    handleScheduleFormChange: jest.fn(),
-    handleStopAgent: jest.fn(),
+    handleAgentFormChange: vi.fn(),
+    handleCancelInboxItem: vi.fn(),
+    handleCreateAgent: vi.fn(),
+    handleCreateInboxItem: vi.fn(),
+    handleCreateSchedule: vi.fn(),
+    handleDisableSchedule: vi.fn(),
+    handleEnableSchedule: vi.fn(),
+    handleInboxFormChange: vi.fn(),
+    handleKillSwitchChange: vi.fn(),
+    handlePauseAgent: vi.fn(),
+    handleResumeAgent: vi.fn(),
+    handleScheduleFormChange: vi.fn(),
+    handleStopAgent: vi.fn(),
     inboxForm: { agentId: "", goal: "", payload: "{}" },
     inboxItems: [],
     isStaleData: false,
@@ -77,7 +77,7 @@ function buildControllerState(overrides = {}) {
     latestCheckpointByAgent: {},
     latestCheckpointByRun: {},
     loading: false,
-    refreshWorkspace: jest.fn(),
+    refreshWorkspace: vi.fn(),
     refreshing: false,
     resourceErrors: {
       status: "",
@@ -100,7 +100,7 @@ function buildControllerState(overrides = {}) {
     },
     schedules: [],
     selectedRunSummary: null,
-    setKillReason: jest.fn(),
+    setKillReason: vi.fn(),
     supervisorTone: "success",
     ...overrides,
   };
@@ -128,7 +128,7 @@ test("shows a degraded backend banner when the controller reports panel failures
     })
   );
 
-  render(<AutonomyWorkspace onOpenRun={jest.fn()} selectedRunId={null} />);
+  render(<AutonomyWorkspace onOpenRun={vi.fn()} selectedRunId={null} />);
 
   expect(screen.getByText(/Degraded backend state for agents/)).toBeInTheDocument();
   expect(screen.getByText("Agents offline")).toBeInTheDocument();
@@ -143,7 +143,7 @@ test("shows a stale-data banner when the controller reports stale autonomy state
     })
   );
 
-  render(<AutonomyWorkspace onOpenRun={jest.fn()} selectedRunId={null} />);
+  render(<AutonomyWorkspace onOpenRun={vi.fn()} selectedRunId={null} />);
 
   expect(screen.getByText(/Autonomy data is stale/)).toBeInTheDocument();
 });

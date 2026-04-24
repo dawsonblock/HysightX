@@ -1,13 +1,13 @@
-function loadAutonomyApiModule(backendUrl) {
-  jest.resetModules();
+async function loadAutonomyApiModule(backendUrl) {
+  vi.resetModules();
 
   if (backendUrl === undefined) {
-    delete process.env.REACT_APP_BACKEND_URL;
+    vi.unstubAllEnvs();
   } else {
-    process.env.REACT_APP_BACKEND_URL = backendUrl;
+    vi.stubEnv("VITE_BACKEND_URL", backendUrl);
   }
 
-  return require("@/lib/autonomy-api");
+  return import("@/lib/autonomy-api");
 }
 
 function createJsonResponse(payload, { ok = true, status = 200, statusText = "OK" } = {}) {
@@ -15,31 +15,25 @@ function createJsonResponse(payload, { ok = true, status = 200, statusText = "OK
     ok,
     status,
     statusText,
-    text: jest.fn().mockResolvedValue(JSON.stringify(payload)),
+    text: vi.fn().mockResolvedValue(JSON.stringify(payload)),
   };
 }
 
 describe("autonomy API client boundary", () => {
   const originalFetch = global.fetch;
-  const originalBackendUrl = process.env.REACT_APP_BACKEND_URL;
 
   beforeEach(() => {
-    global.fetch = jest.fn();
+    global.fetch = vi.fn();
   });
 
   afterEach(() => {
-    if (originalBackendUrl === undefined) {
-      delete process.env.REACT_APP_BACKEND_URL;
-    } else {
-      process.env.REACT_APP_BACKEND_URL = originalBackendUrl;
-    }
-
     global.fetch = originalFetch;
-    jest.clearAllMocks();
+    vi.clearAllMocks();
+    vi.unstubAllEnvs();
   });
 
   test("autonomy status and agent list helpers validate dedicated backend routes", async () => {
-    const { getAutonomyStatus, listAutonomyAgents } = loadAutonomyApiModule();
+    const { getAutonomyStatus, listAutonomyAgents } = await loadAutonomyApiModule();
 
     global.fetch
       .mockResolvedValueOnce(
@@ -139,7 +133,7 @@ describe("autonomy API client boundary", () => {
       pauseAutonomyAgent,
       resumeAutonomyAgent,
       stopAutonomyAgent,
-    } = loadAutonomyApiModule();
+    } = await loadAutonomyApiModule();
 
     global.fetch
       .mockResolvedValueOnce(
@@ -214,7 +208,7 @@ describe("autonomy API client boundary", () => {
   });
 
   test("getAutonomyWorkspace fetches the aggregate snapshot endpoint", async () => {
-    const { getAutonomyWorkspace } = loadAutonomyApiModule();
+    const { getAutonomyWorkspace } = await loadAutonomyApiModule();
 
     const snapshotPayload = {
       snapshot_at: "2026-04-21T10:00:00Z",

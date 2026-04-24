@@ -19,28 +19,28 @@ import {
   getRunSummary,
 } from "@/lib/api";
 
-jest.mock("@/lib/autonomy-api", () => ({
-  cancelAutonomyInboxItem: jest.fn(),
-  clearAutonomyKillSwitch: jest.fn(),
-  createAutonomyAgent: jest.fn(),
-  createAutonomyInboxItem: jest.fn(),
-  createAutonomySchedule: jest.fn(),
-  disableAutonomySchedule: jest.fn(),
-  enableAutonomyKillSwitch: jest.fn(),
-  enableAutonomySchedule: jest.fn(),
-  getAutonomyWorkspace: jest.fn(),
-  pauseAutonomyAgent: jest.fn(),
-  resumeAutonomyAgent: jest.fn(),
-  stopAutonomyAgent: jest.fn(),
+vi.mock("@/lib/autonomy-api", () => ({
+  cancelAutonomyInboxItem: vi.fn(),
+  clearAutonomyKillSwitch: vi.fn(),
+  createAutonomyAgent: vi.fn(),
+  createAutonomyInboxItem: vi.fn(),
+  createAutonomySchedule: vi.fn(),
+  disableAutonomySchedule: vi.fn(),
+  enableAutonomyKillSwitch: vi.fn(),
+  enableAutonomySchedule: vi.fn(),
+  getAutonomyWorkspace: vi.fn(),
+  pauseAutonomyAgent: vi.fn(),
+  resumeAutonomyAgent: vi.fn(),
+  stopAutonomyAgent: vi.fn(),
 }));
 
-jest.mock("@/lib/api", () => ({
-  getRunSummary: jest.fn(),
-  toErrorMessage: jest.fn((error, fallback) => error?.message || fallback),
+vi.mock("@/lib/api", () => ({
+  getRunSummary: vi.fn(),
+  toErrorMessage: vi.fn((error, fallback) => error?.message || fallback),
 }));
 
-jest.mock("@/hooks/use-toast", () => ({
-  toast: jest.fn(),
+vi.mock("@/hooks/use-toast", () => ({
+  toast: vi.fn(),
 }));
 
 const STATUS_FIXTURE = {
@@ -242,7 +242,7 @@ function primeMocks(overrides = {}) {
 }
 
 function renderWorkspace(props = {}) {
-  const onOpenRun = jest.fn();
+  const onOpenRun = vi.fn();
   render(
     <AutonomyWorkspace
       onOpenRun={onOpenRun}
@@ -257,7 +257,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 test("renders backend autonomy status, style state, and replay links", async () => {
