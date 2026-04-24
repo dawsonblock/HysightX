@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "timestamp": "2026-04-24T22:16:48.713775Z",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "python_version": "3.9.7 (default, Dec 17 2025, 17:53:57) \n[Clang 17.0.0 (clang-1700.6.3.2)]",
+  "node_version": "v24.15.0",
+  "yarn_version": "1.22.22",
+  "cargo_version": "cargo 1.94.0 (85eff7c80 2026-01-15)",
+  "rustc_version": "rustc 1.94.0 (4a4ef493e 2026-03-02)",
+  "git_commit": "8cd3ea1c037ef930ee07808d4b50e1b52a5ab63d",
+  "git_dirty": true,
+  "source_fingerprint": "b18193b4d023f42e1ffc48b0e42dbeeeaca1712d8def9931d5a285299454a109",
+  "source_files_hashed": 625,
+  "commands_run": [
+    "python scripts/proof_current_tree.py"
+  ],
+  "status": "pass",
+  "notes": "Fingerprint covers all .py/.js/.ts/.rs/config files excluding .git, caches, build outputs, and artifacts/."
+}

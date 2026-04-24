@@ -373,12 +373,12 @@ export async function listRuns({ query, limit, offset }) {
 }
 
 export function getRunSummary(runId) {
-  return fetchJson(`/runs/${encodeSegment(runId)}`, undefined, runSummarySchema);
+  return fetchJson(`/hca/run/${encodeSegment(runId)}`, undefined, runSummarySchema);
 }
 
 export function listRunEvents(runId, { limit, offset } = {}) {
   return fetchJson(
-    `/runs/${encodeSegment(runId)}/events${buildQuery({
+    `/hca/run/${encodeSegment(runId)}/events${buildQuery({
       limit,
       offset,
     })}`,
@@ -389,7 +389,7 @@ export function listRunEvents(runId, { limit, offset } = {}) {
 
 export function listRunArtifacts(runId, { limit, offset } = {}) {
   return fetchJson(
-    `/runs/${encodeSegment(runId)}/artifacts${buildQuery({
+    `/hca/run/${encodeSegment(runId)}/artifacts${buildQuery({
       limit,
       offset,
     })}`,
@@ -404,9 +404,10 @@ export function getRunArtifactDetail(
   { previewBytes } = {}
 ) {
   return fetchJson(
-    `/runs/${encodeSegment(runId)}/artifacts/${encodeSegment(
+    `/hca/run/${encodeSegment(runId)}/artifacts/${encodeSegment(
       artifactId
     )}${buildQuery({ preview_bytes: previewBytes })}`,
+
     undefined,
     runArtifactDetailSchema
   );

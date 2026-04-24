@@ -414,7 +414,7 @@ Notes for local development:
 | Area | Primary tech |
 | --- | --- |
 | Backend | Python, FastAPI, Pydantic |
-| Frontend | React 19, CRACO, Tailwind, Radix primitives |
+| Frontend | React 19, Vite, Vitest, Tailwind, Radix primitives |
 | Proof | pytest, JUnit XML, proof receipts under `artifacts/proof/` |
 | Data | Optional MongoDB for `/api/status` persistence |
 | Sidecar | Rust, Axum, Tokio |

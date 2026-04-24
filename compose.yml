@@ -6,6 +6,9 @@
 # Sidecar mode  (Rust memvid backend):
 #   docker compose -f compose.yml -f compose.sidecar.yml up --build
 #
+# Frontend only (if backend already running locally):
+#   docker compose up --build frontend
+#
 # Copy .env.example → .env and fill in your values before starting.
 
 services:
@@ -30,7 +33,7 @@ services:
       MONGO_URL: ${MONGO_URL:-}
       DB_NAME: ${DB_NAME:-}
       # Comma-separated allowed CORS origins (no wildcards)
-      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
       # LLM API key used by HCA runtime modules
       EMERGENT_LLM_KEY: ${EMERGENT_LLM_KEY:-}
     volumes:
@@ -45,6 +48,33 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
+    restart: unless-stopped
+
+  # ─── frontend ─────────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        # Leave blank — nginx proxies /api/* to backend at runtime
+        VITE_BACKEND_URL: ""
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - wget
+        - --quiet
+        - --tries=1
+        - --spider
+        - http://localhost:3000/
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
     restart: unless-stopped
 
 volumes:

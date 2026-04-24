@@ -1,12 +1,12 @@
 # Hysight Frontend
 
-This package is the React frontend for Hysight. It uses the Create React App toolchain with CRACO overrides and talks to the FastAPI backend under `/api`.
+This package is the React frontend for Hysight. It uses **Vite** as the build tool and **Vitest** for testing, and talks to the FastAPI backend under `/api`.
 
 ## Runtime Expectations
 
 - Local development assumes the backend is running on `http://localhost:8000`.
 - The frontend dev server proxies `/api` requests to the backend automatically, so no environment variable is required for the default local workflow.
-- Set `REACT_APP_BACKEND_URL` only when you need to target a different backend origin without relying on the dev proxy.
+- Set `VITE_BACKEND_URL` only when you need to target a different backend origin without relying on the dev proxy.
 - Chat streaming uses `POST /api/hca/run/stream`.
 - The operator console reads `GET /api/subsystems` to surface degraded dependencies and operating mode.
 - Replay-backed approval context in chat and the operator console comes from the run summary returned by `GET /api/hca/run/{run_id}` and the approve/deny routes.
@@ -55,17 +55,17 @@ Node 24.x runtime manually before running Yarn commands.
 yarn install
 ```
 
-If you need a non-default backend origin, copy `.env.example` to `.env.local` and set `REACT_APP_BACKEND_URL`.
+If you need a non-default backend origin, copy `.env.example` to `.env.local` and set `VITE_BACKEND_URL`.
 
 ## Available Scripts
 
 ### `yarn start`
 
-Runs the CRACO-backed development server. In local development, `/api` requests proxy to `http://localhost:8000` by default.
+Runs the Vite development server. In local development, `/api` requests proxy to `http://localhost:8000` via the Vite proxy config.
 
 ### `yarn test`
 
-Runs the frontend test command through CRACO.
+Runs the Vitest test suite.
 
 ### `yarn build`
 

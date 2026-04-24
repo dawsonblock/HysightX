@@ -370,6 +370,10 @@ function DashboardHome({ selectedRunId, onSelectRun, onRunObserved, operatorRefr
         <p className="dashboard__greetingSubtitle">Here's what's happening across your system.</p>
       </div>
 
+      <div className="dashboard__demoNotice">
+        Sample data — connect the backend to see live values
+      </div>
+
       <div className="dashboard__statGrid">
         <div className="dashboard__statCard">
           <div className="dashboard__statIcon dashboard__statIcon--blue">
