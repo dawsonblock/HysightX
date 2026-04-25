@@ -39,6 +39,21 @@ export default defineConfig({
   build: {
     outDir: "build",
     sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules/react") || id.includes("node_modules/react-dom") || id.includes("node_modules/react-router-dom") || id.includes("node_modules/react-router/")) {
+            return "vendor";
+          }
+          if (id.includes("/src/components/OperatorConsole")) {
+            return "operator";
+          }
+          if (id.includes("/src/features/autonomy")) {
+            return "autonomy";
+          }
+        },
+      },
+    },
   },
   test: {
     globals: true,
