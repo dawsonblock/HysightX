@@ -628,7 +628,10 @@ test("allows approving a pending run directly from the replay console", async ()
   const user = userEvent.setup();
   const onRunObserved = vi.fn();
 
-  decideRunApproval.mockResolvedValue(RUN_APPROVED_DETAIL);
+  decideRunApproval.mockImplementation(async () => {
+    getRunSummary.mockResolvedValue(RUN_APPROVED_DETAIL);
+    return RUN_APPROVED_DETAIL;
+  });
 
   renderConsole({ selectedRunId: "run-awaiting", onRunObserved });
 
@@ -652,7 +655,10 @@ test("allows denying a pending run directly from the replay console", async () =
   const user = userEvent.setup();
   const onRunObserved = vi.fn();
 
-  decideRunApproval.mockResolvedValue(RUN_DENIED_DETAIL);
+  decideRunApproval.mockImplementation(async () => {
+    getRunSummary.mockResolvedValue(RUN_DENIED_DETAIL);
+    return RUN_DENIED_DETAIL;
+  });
 
   renderConsole({ selectedRunId: "run-awaiting", onRunObserved });
 

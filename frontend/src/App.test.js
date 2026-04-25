@@ -76,6 +76,21 @@ vi.mock("@/components/ui/toaster", () => ({
   },
 }));
 
+vi.mock("@/lib/api", () => ({
+  __esModule: true,
+  listRuns: vi.fn().mockResolvedValue({ records: [], total: 0 }),
+  listMemories: vi.fn().mockResolvedValue({ records: [], total: 0 }),
+}));
+
+vi.mock("@/lib/autonomy-api", () => ({
+  __esModule: true,
+  getAutonomyStatus: vi.fn().mockResolvedValue({
+    active_agents: 0,
+    pending_escalations: 0,
+    kill_switch_active: false,
+  }),
+}));
+
 beforeEach(() => {
   window.localStorage.clear();
   window.history.pushState({}, "", "/?run=run-from-url&view=runs");

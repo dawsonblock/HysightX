@@ -1,11 +1,13 @@
 import "@/App.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HCAChat from "@/components/HCAChat";
 import MemoryBrowser from "@/components/MemoryBrowser";
 import OperatorConsole from "@/components/OperatorConsole";
 import AutonomyWorkspace from "@/features/autonomy/AutonomyWorkspace";
 import { Toaster } from "@/components/ui/toaster";
+import { listRuns, listMemories } from "@/lib/api";
+import { getAutonomyStatus } from "@/lib/autonomy-api";
 
 const SELECTED_RUN_STORAGE_KEY = "hysight:selected-run-id";
 const ACTIVE_VIEW_STORAGE_KEY = "hysight:active-view";
@@ -309,7 +311,7 @@ function TopBar({ selectedRunId, onSearchMemory }) {
           type="button"
           className="shell-topbar__search"
           onClick={onSearchMemory}
-          aria-label="Memory search"
+          aria-label="Search memories"
         >
           <IconSearch size={14} color="#94a3b8" />
           <span className="shell-topbar__searchPlaceholder">Memory Search</span>
@@ -334,7 +336,7 @@ function TopBar({ selectedRunId, onSearchMemory }) {
   );
 }
 
-function AssistantPanel({ open, onClose, onRunObserved }) {
+function AssistantPanel({ open, onClose, onRunObserved, onToggleMemPanel }) {
   if (!open) return null;
   return (
     <aside className="shell-assistant">
@@ -354,7 +356,7 @@ function AssistantPanel({ open, onClose, onRunObserved }) {
       <div className="shell-assistant__body">
         <HCAChat
           memPanelOpen={false}
-          onToggleMemPanel={() => {}}
+          onToggleMemPanel={onToggleMemPanel ?? (() => {})}
           onRunObserved={onRunObserved}
         />
       </div>
@@ -362,16 +364,73 @@ function AssistantPanel({ open, onClose, onRunObserved }) {
   );
 }
 
+function useDashboardStats() {
+  const [stats, setStats] = useState(null);
+  const [recentRuns, setRecentRuns] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const abortRef = useRef(null);
+
+  const refresh = useCallback(() => {
+    if (abortRef.current) abortRef.current.abort();
+    abortRef.current = new AbortController();
+    setLoading(true);
+
+    Promise.all([
+      listRuns({ limit: 5 }).catch(() => null),
+      listMemories({ limit: 1 }).catch(() => null),
+      getAutonomyStatus().catch(() => null),
+    ]).then(([runsData, memData, autoData]) => {
+      const runs = runsData?.records ?? [];
+      const total = runsData?.total ?? 0;
+      const activeRuns = runs.filter(r =>
+        r.status === "running" || r.status === "active" || r.status === "awaiting_approval"
+      ).length;
+      const pendingApprovals = runs.filter(r => r.status === "awaiting_approval").length;
+      const memories = memData?.total ?? 0;
+      const agents = autoData?.active_agents ?? 0;
+      const escalations = autoData?.pending_escalations ?? 0;
+      const killActive = autoData?.kill_switch_active ?? false;
+
+      const statusCounts = {};
+      runs.forEach(r => { statusCounts[r.status] = (statusCounts[r.status] || 0) + 1; });
+
+      setStats({ activeRuns, pendingApprovals, memories, agents, escalations, killActive, total, statusCounts });
+      setRecentRuns(runs.slice(0, 5));
+      setLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    refresh();
+    const t = setInterval(refresh, 15000);
+    return () => { clearInterval(t); if (abortRef.current) abortRef.current.abort(); };
+  }, [refresh]);
+
+  return { stats, recentRuns, loading, refresh };
+}
+
+function fmtTs(ts) {
+  if (!ts) return "";
+  const d = new Date(typeof ts === "number" ? ts * 1000 : ts);
+  return isNaN(d) ? "" : d.toLocaleString();
+}
+
 function DashboardHome({ selectedRunId, onSelectRun, onRunObserved, operatorRefreshToken, onChangeView }) {
+  const { stats, recentRuns, loading, refresh } = useDashboardStats();
+
+  const runStateBadge = (status) => {
+    if (status === "completed") return "Completed";
+    if (status === "awaiting_approval") return "Awaiting";
+    if (status === "failed" || status === "error") return "Failed";
+    if (status === "running" || status === "active") return "Running";
+    return status ?? "—";
+  };
+
   return (
     <div className="dashboard">
       <div className="dashboard__greeting">
         <h1 className="dashboard__greetingTitle">{getGreeting()}, Admin</h1>
         <p className="dashboard__greetingSubtitle">Here's what's happening across your system.</p>
-      </div>
-
-      <div className="dashboard__demoNotice">
-        Sample data — connect the backend to see live values
       </div>
 
       <div className="dashboard__statGrid">
@@ -380,9 +439,13 @@ function DashboardHome({ selectedRunId, onSelectRun, onRunObserved, operatorRefr
             <IconTrendUp size={20} color="#3b82f6" />
           </div>
           <div className="dashboard__statBody">
-            <div className="dashboard__statLabel">Active Runs</div>
-            <div className="dashboard__statValue">8 <span className="dashboard__statDelta dashboard__statDelta--up">+2</span></div>
-            <div className="dashboard__statMeta">vs yesterday</div>
+            <div className="dashboard__statLabel">Total Runs</div>
+            <div className="dashboard__statValue">
+              {loading ? "…" : (stats?.total ?? 0)}
+            </div>
+            <div className="dashboard__statMeta">
+              {loading ? "" : `${stats?.activeRuns ?? 0} active / awaiting`}
+            </div>
           </div>
         </div>
         <div className="dashboard__statCard">
@@ -391,8 +454,10 @@ function DashboardHome({ selectedRunId, onSelectRun, onRunObserved, operatorRefr
           </div>
           <div className="dashboard__statBody">
             <div className="dashboard__statLabel">Pending Approvals</div>
-            <div className="dashboard__statValue">3 <span className="dashboard__statDelta dashboard__statDelta--down">-1</span></div>
-            <div className="dashboard__statMeta">vs yesterday</div>
+            <div className="dashboard__statValue">
+              {loading ? "…" : (stats?.pendingApprovals ?? 0)}
+            </div>
+            <div className="dashboard__statMeta">from recent runs</div>
           </div>
         </div>
         <div className="dashboard__statCard">
@@ -401,8 +466,10 @@ function DashboardHome({ selectedRunId, onSelectRun, onRunObserved, operatorRefr
           </div>
           <div className="dashboard__statBody">
             <div className="dashboard__statLabel">Memories</div>
-            <div className="dashboard__statValue">1,248 <span className="dashboard__statDelta dashboard__statDelta--up">+86</span></div>
-            <div className="dashboard__statMeta">vs yesterday</div>
+            <div className="dashboard__statValue">
+              {loading ? "…" : (stats?.memories ?? 0).toLocaleString()}
+            </div>
+            <div className="dashboard__statMeta">stored records</div>
           </div>
         </div>
         <div className="dashboard__statCard">
@@ -411,8 +478,17 @@ function DashboardHome({ selectedRunId, onSelectRun, onRunObserved, operatorRefr
           </div>
           <div className="dashboard__statBody">
             <div className="dashboard__statLabel">Autonomy Agents</div>
-            <div className="dashboard__statValue">6 <span className="dashboard__statBadge dashboard__statBadge--online">Online</span></div>
-            <div className="dashboard__statMeta dashboard__statMeta--warn">2 Degraded</div>
+            <div className="dashboard__statValue">
+              {loading ? "…" : (stats?.agents ?? 0)}
+              {!loading && stats?.agents > 0 && (
+                <span className="dashboard__statBadge dashboard__statBadge--online"> Active</span>
+              )}
+            </div>
+            <div className="dashboard__statMeta">
+              {!loading && (stats?.escalations ?? 0) > 0
+                ? <span className="dashboard__statMeta--warn">{stats.escalations} escalation{stats.escalations !== 1 ? "s" : ""}</span>
+                : "no escalations"}
+            </div>
           </div>
         </div>
         <div className="dashboard__statCard">
@@ -420,9 +496,19 @@ function DashboardHome({ selectedRunId, onSelectRun, onRunObserved, operatorRefr
             <IconShield size={20} color="#16a34a" />
           </div>
           <div className="dashboard__statBody">
-            <div className="dashboard__statLabel">System Health</div>
-            <div className="dashboard__statValue">98% <span className="dashboard__statBadge dashboard__statBadge--healthy">Healthy</span></div>
-            <div className="dashboard__statMeta">All systems operational</div>
+            <div className="dashboard__statLabel">Kill Switch</div>
+            <div className="dashboard__statValue">
+              {loading ? "…" : (
+                stats?.killActive
+                  ? <span style={{color:"#ef4444"}}>Active</span>
+                  : <span style={{color:"#16a34a"}}>Off</span>
+              )}
+            </div>
+            <div className="dashboard__statMeta">
+              <button type="button" className="dashboard__cardLink" onClick={() => onChangeView("autonomy")}>
+                Go to Autonomy →
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -432,40 +518,45 @@ function DashboardHome({ selectedRunId, onSelectRun, onRunObserved, operatorRefr
           <div className="dashboard__card">
             <div className="dashboard__cardHeader">
               <span className="dashboard__cardTitle">Recent Runs</span>
+              <button type="button" className="dashboard__cardLink" onClick={refresh} title="Refresh">↻</button>
               <button type="button" className="dashboard__cardLink" onClick={() => onChangeView("runs")}>View all</button>
             </div>
-            <div className="dashboard__runList">
-              {[
-                { id: "RUN-2025-05-19-0001", state: "completed",         time: "May 19, 2025 10:24 AM", dur: "12m 42s" },
-                { id: "RUN-2025-05-19-0000", state: "awaiting_approval", time: "May 19, 2025 09:41 AM", dur: "18m 7s" },
-                { id: "RUN-2025-05-18-9999", state: "completed",         time: "May 18, 2025 04:15 PM", dur: "9m 33s" },
-                { id: "RUN-2025-05-18-9998", state: "failed",            time: "May 18, 2025 02:22 PM", dur: "3m 11s" },
-                { id: "RUN-2025-05-18-9997", state: "completed",         time: "May 18, 2025 11:03 AM", dur: "14m 55s" },
-              ].map((run) => (
-                <button
-                  key={run.id}
-                  type="button"
-                  className={`dashboard__runRow${selectedRunId === run.id ? " is-selected" : ""}`}
-                  onClick={() => { onSelectRun(run.id); onChangeView("runs"); }}
-                >
-                  <div className="dashboard__runInfo">
-                    <span className={`dashboard__runDot dashboard__runDot--${run.state}`} />
-                    <span className="dashboard__runId dashboard__runId--mono">{run.id}</span>
-                  </div>
-                  <div className="dashboard__runRight">
-                    <span className="dashboard__runTime">{run.time}</span>
-                    <span className={`dashboard__runBadge dashboard__runBadge--${run.state}`}>
-                      {run.state === "awaiting_approval" ? "Awaiting" : run.state === "completed" ? "Completed" : "Failed"}
-                    </span>
-                    <span className="dashboard__runDur">{run.dur}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-            <div className="dashboard__cardFooter">
-              Showing 5 of 128 runs
-              <button type="button" className="dashboard__cardLink" onClick={() => onChangeView("runs")}>View all runs →</button>
-            </div>
+            {loading ? (
+              <div className="dashboard__cardFooter">Loading…</div>
+            ) : recentRuns.length === 0 ? (
+              <div className="dashboard__runOverviewEmpty">
+                <p>No runs yet.</p>
+                <button type="button" className="dashboard__cardLink" onClick={() => onChangeView("assist")}>Start a run via Assist →</button>
+              </div>
+            ) : (
+              <>
+                <div className="dashboard__runList">
+                  {recentRuns.map((run) => (
+                    <button
+                      key={run.run_id}
+                      type="button"
+                      className={`dashboard__runRow${selectedRunId === run.run_id ? " is-selected" : ""}`}
+                      onClick={() => { onSelectRun(run.run_id); onChangeView("runs"); }}
+                    >
+                      <div className="dashboard__runInfo">
+                        <span className={`dashboard__runDot dashboard__runDot--${run.status ?? "unknown"}`} />
+                        <span className="dashboard__runId dashboard__runId--mono">{run.run_id}</span>
+                      </div>
+                      <div className="dashboard__runRight">
+                        <span className="dashboard__runTime">{fmtTs(run.created_at)}</span>
+                        <span className={`dashboard__runBadge dashboard__runBadge--${run.status ?? "unknown"}`}>
+                          {runStateBadge(run.status)}
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+                <div className="dashboard__cardFooter">
+                  Showing {recentRuns.length} of {stats?.total ?? recentRuns.length} runs
+                  <button type="button" className="dashboard__cardLink" onClick={() => onChangeView("runs")}>View all runs →</button>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -473,7 +564,7 @@ function DashboardHome({ selectedRunId, onSelectRun, onRunObserved, operatorRefr
           <div className="dashboard__card">
             <div className="dashboard__cardHeader">
               <span className="dashboard__cardTitle">Run Overview</span>
-              <span className="dashboard__completedBadge">Completed</span>
+              {selectedRunId && <span className="dashboard__completedBadge">Selected</span>}
               <button type="button" className="dashboard__cardIconBtn">⋮</button>
             </div>
             {selectedRunId ? (
@@ -497,124 +588,52 @@ function DashboardHome({ selectedRunId, onSelectRun, onRunObserved, operatorRefr
         <div className="dashboard__panelRight">
           <div className="dashboard__card">
             <div className="dashboard__cardHeader">
-              <span className="dashboard__cardTitle">System Activity</span>
-              <button type="button" className="dashboard__cardLink">View all</button>
-            </div>
-            <div className="dashboard__activityList">
-              {[
-                { sym: "✓", color: "green",  label: "Run completed",      desc: "RUN-2025-05-19-0001 completed successfully.", time: "2m ago" },
-                { sym: "↑", color: "blue",   label: "Approval granted",   desc: "Data access request approved by Admin.", time: "8m ago" },
-                { sym: "◎", color: "purple", label: "New memory created",  desc: "Customer churn analysis insights stored.", time: "15m ago" },
-                { sym: "▷", color: "teal",   label: "Agent started",      desc: "DataAnalyst agent started by system.", time: "16m ago" },
-                { sym: "✕", color: "red",    label: "Run failed",         desc: "RUN-2025-05-18-9998 failed during execution.", time: "2h ago" },
-              ].map((item, i) => (
-                <div key={i} className="dashboard__activityItem">
-                  <span className={`dashboard__activityIcon dashboard__activityIcon--${item.color}`}>{item.sym}</span>
-                  <div className="dashboard__activityBody">
-                    <div className="dashboard__activityLabel">{item.label}</div>
-                    <div className="dashboard__activityDesc">{item.desc}</div>
-                  </div>
-                  <div className="dashboard__activityTime">{item.time}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="dashboard__card dashboard__card--runDist">
-            <div className="dashboard__cardHeader">
               <span className="dashboard__cardTitle">Run Status Distribution</span>
-              <button type="button" className="dashboard__cardLink">View all</button>
+              <button type="button" className="dashboard__cardLink" onClick={() => onChangeView("runs")}>View all</button>
             </div>
-            <div className="dashboard__distRow">
-              <div className="dashboard__distDonut">
-                <svg viewBox="0 0 36 36" className="dashboard__donutSvg">
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#e2e8f0" strokeWidth="3.2" />
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#22c55e" strokeWidth="3.2"
-                    strokeDasharray="61 39" strokeDashoffset="25" />
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#3b82f6" strokeWidth="3.2"
-                    strokeDasharray="6 94" strokeDashoffset="-36" />
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#f59e0b" strokeWidth="3.2"
-                    strokeDasharray="13 87" strokeDashoffset="-42" />
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#94a3b8" strokeWidth="3.2"
-                    strokeDasharray="9 91" strokeDashoffset="-55" />
-                  <circle cx="18" cy="18" r="15.9" fill="none" stroke="#ef4444" strokeWidth="3.2"
-                    strokeDasharray="11 89" strokeDashoffset="-64" />
-                  <text x="18" y="19" textAnchor="middle" fontSize="6" fontWeight="700" fill="#10233c">128</text>
-                  <text x="18" y="24" textAnchor="middle" fontSize="3.5" fill="#64748b">Total Runs</text>
-                </svg>
-              </div>
-              <div className="dashboard__distLegend">
-                {[
-                  { color: "#22c55e", label: "Completed",        pct: "78 (61%)" },
-                  { color: "#3b82f6", label: "Running",          pct: "8 (6%)" },
-                  { color: "#f59e0b", label: "Awaiting Approval",pct: "16 (13%)" },
-                  { color: "#94a3b8", label: "Staled",           pct: "12 (9%)" },
-                  { color: "#ef4444", label: "Cancelled",        pct: "14 (11%)" },
-                ].map((item) => (
-                  <div key={item.label} className="dashboard__distItem">
-                    <span className="dashboard__distDot" style={{ background: item.color }} />
-                    <span className="dashboard__distLabel">{item.label}</span>
-                    <span className="dashboard__distPct">{item.pct}</span>
+            {loading ? (
+              <div className="dashboard__cardFooter">Loading…</div>
+            ) : stats?.total === 0 ? (
+              <div className="dashboard__runOverviewEmpty"><p>No runs to show.</p></div>
+            ) : (
+              <div className="dashboard__distLegend" style={{padding:"12px 0"}}>
+                {Object.entries(stats?.statusCounts ?? {}).map(([status, count]) => (
+                  <div key={status} className="dashboard__distItem">
+                    <span className={`dashboard__runDot dashboard__runDot--${status}`} style={{display:"inline-block",width:10,height:10,borderRadius:"50%",marginRight:6}} />
+                    <span className="dashboard__distLabel">{status}</span>
+                    <span className="dashboard__distPct">{count}</span>
                   </div>
                 ))}
+                <div className="dashboard__distItem" style={{marginTop:8,fontWeight:600}}>
+                  <span className="dashboard__distLabel">Total</span>
+                  <span className="dashboard__distPct">{stats?.total ?? 0}</span>
+                </div>
               </div>
-            </div>
+            )}
           </div>
-        </div>
-      </div>
 
-      <div className="dashboard__autonomyRow">
-        <div className="dashboard__card dashboard__card--autonomy">
-          <div className="dashboard__cardHeader">
-            <span className="dashboard__cardTitle">Autonomy Overview</span>
-            <button type="button" className="dashboard__cardLink" onClick={() => onChangeView("autonomy")}>View all agents</button>
-          </div>
-          <div className="dashboard__autonomyGrid">
-            <div className="dashboard__autonomyStat">
-              <div className="dashboard__autonomyStatLabel">Agent Status</div>
-              <div className="dashboard__autonomyDonutWrap">
-                <svg viewBox="0 0 36 36" className="dashboard__autonomyDonut">
-                  <circle cx="18" cy="18" r="13" fill="none" stroke="#e2e8f0" strokeWidth="4" />
-                  <circle cx="18" cy="18" r="13" fill="none" stroke="#22c55e" strokeWidth="4"
-                    strokeDasharray="33 67" strokeDashoffset="25" />
-                  <circle cx="18" cy="18" r="13" fill="none" stroke="#f59e0b" strokeWidth="4"
-                    strokeDasharray="16 84" strokeDashoffset="-8" />
-                  <text x="18" y="21" textAnchor="middle" fontSize="7" fontWeight="700" fill="#10233c">6</text>
-                  <text x="18" y="26" textAnchor="middle" fontSize="3" fill="#64748b">Total</text>
-                </svg>
-                <div className="dashboard__autonomyAgentLegend">
-                  <span className="dashboard__agentLegendDot" style={{ background: "#22c55e" }} /> 4 Online
-                  <span className="dashboard__agentLegendDot" style={{ background: "#f59e0b", marginLeft: 8 }} /> 2 Degraded
-                  <span className="dashboard__agentLegendDot" style={{ background: "#ef4444", marginLeft: 8 }} /> 0 Offline
-                </div>
+          <div className="dashboard__card">
+            <div className="dashboard__cardHeader">
+              <span className="dashboard__cardTitle">Autonomy</span>
+              <button type="button" className="dashboard__cardLink" onClick={() => onChangeView("autonomy")}>Go to Autonomy →</button>
+            </div>
+            <div style={{padding:"8px 0"}}>
+              <div className="dashboard__distItem">
+                <span className="dashboard__distLabel">Active agents</span>
+                <span className="dashboard__distPct">{loading ? "…" : stats?.agents ?? 0}</span>
               </div>
-            </div>
-            <div className="dashboard__autonomyStat">
-              <div className="dashboard__autonomyStatLabel">Budget Status</div>
-              <div className="dashboard__autonomyBudget">
-                <div className="dashboard__budgetAmount">$2,847 / $5,000</div>
-                <div className="dashboard__budgetBar">
-                  <div className="dashboard__budgetFill" style={{ width: "57%" }} />
-                </div>
-                <div className="dashboard__budgetMeta">57%</div>
-                <div className="dashboard__budgetSub">Daily budget usage</div>
-                <div className="dashboard__budgetReset">Resets in 6h 23m</div>
+              <div className="dashboard__distItem">
+                <span className="dashboard__distLabel">Escalations</span>
+                <span className="dashboard__distPct" style={(stats?.escalations ?? 0) > 0 ? {color:"#f97316",fontWeight:600} : {}}>
+                  {loading ? "…" : stats?.escalations ?? 0}
+                </span>
               </div>
-            </div>
-            <div className="dashboard__autonomyStat">
-              <div className="dashboard__autonomyStatLabel">Pending Escalations</div>
-              <div className="dashboard__escalationCount">2</div>
-              <div className="dashboard__escalationSub">Requires attention</div>
-              <button type="button" className="dashboard__escalationBtn" onClick={() => onChangeView("autonomy")}>
-                View Escalations
-              </button>
-            </div>
-            <div className="dashboard__autonomyStat">
-              <div className="dashboard__autonomyStatLabel">Kill Switch</div>
-              <button type="button" className="dashboard__killSwitchBtn">
-                ACTIVATE KILL SWITCH
-              </button>
-              <div className="dashboard__killSwitchNote">This will stop all autonomous agents immediately.</div>
+              <div className="dashboard__distItem">
+                <span className="dashboard__distLabel">Kill switch</span>
+                <span className="dashboard__distPct" style={stats?.killActive ? {color:"#ef4444",fontWeight:600} : {color:"#16a34a"}}>
+                  {loading ? "…" : stats?.killActive ? "Active" : "Off"}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -758,6 +777,7 @@ function App() {
               open={assistantOpen}
               onClose={() => setAssistantOpen(false)}
               onRunObserved={handleRunObserved}
+              onToggleMemPanel={() => setMemOpen(prev => !prev)}
             />
           </div>
         </div>

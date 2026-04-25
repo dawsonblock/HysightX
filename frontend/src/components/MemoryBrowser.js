@@ -205,7 +205,7 @@ export default function MemoryBrowser({
       <aside
         aria-label="Memory store"
         aria-modal={isEmbedded ? undefined : "true"}
-        data-testid="memory-browser"
+        data-testid={isEmbedded ? "memory-browser-embedded" : "memory-browser-modal"}
         role={isEmbedded ? "region" : "dialog"}
         style={isEmbedded ? S.embeddedPanel : S.panel}
       >
@@ -231,6 +231,7 @@ export default function MemoryBrowser({
             )}
             {!isEmbedded && (
               <button
+                aria-label="Close memory"
                 data-testid="close-memory-btn"
                 style={S.closeBtn}
                 onClick={onClose}
