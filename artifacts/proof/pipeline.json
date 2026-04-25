@@ -1,0 +1,62 @@
+{
+  "command": "/Users/dawsonblock/Downloads/HysightX/.venv/bin/python scripts/run_tests.py --baseline-step pipeline",
+  "commit_sha": "88028d699c0f9ca0734d16a484b8e2cdfa37b9b6",
+  "environment_mode": "repo_local_venv",
+  "error_test_count": 0,
+  "failed_test_count": 0,
+  "generated_at": "2026-04-25T06:53:18.021121+00:00",
+  "junit_xml": null,
+  "metadata": {
+    "covered_proof_steps": [
+      "pipeline"
+    ],
+    "failed_proof_steps": [],
+    "includes_optional_proof_steps": false,
+    "omitted_proof_steps": [
+      "backend-baseline",
+      "contract",
+      "frontend",
+      "integration",
+      "mongo-live",
+      "sidecar",
+      "autonomy-optional"
+    ],
+    "passed_proof_steps": [
+      "pipeline"
+    ],
+    "receipt_scope": "This receipt covers only the proof steps listed in covered_proof_steps.",
+    "steps": [
+      {
+        "collection_issues": [],
+        "counts": {
+          "error_test_count": 0,
+          "failed_test_count": 0,
+          "passed_test_count": 7,
+          "skipped_test_count": 0,
+          "total_test_count": 7
+        },
+        "id": "pipeline",
+        "junit_xml": "test_reports/pytest/hca-pipeline-proof.xml",
+        "name": "HCA pipeline proof",
+        "outcome": "passed",
+        "proof_failure_reason": null,
+        "proof_metadata": null,
+        "receipt_json": null,
+        "returncode": 0,
+        "skipped_cases": []
+      }
+    ]
+  },
+  "outcome": "passed",
+  "passed_test_count": 7,
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "proof_tier": "pipeline",
+  "python_version": "3.9.7",
+  "repo_fingerprint": "5b3c4e9e17d3e546297d439afd8f0d7f4254b1c7",
+  "schema_version": 2,
+  "service_connection_mode": "none",
+  "service_endpoint": "n/a",
+  "skipped_test_count": 0,
+  "timestamp": "2026-04-25T06:53:18.021121+00:00",
+  "total_test_count": 7
+}

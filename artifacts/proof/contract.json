@@ -1,0 +1,62 @@
+{
+  "command": "/Users/dawsonblock/Downloads/HysightX/.venv/bin/python scripts/run_tests.py --baseline-step pipeline --baseline-step backend-baseline --baseline-step contract",
+  "commit_sha": "88028d699c0f9ca0734d16a484b8e2cdfa37b9b6",
+  "environment_mode": "repo_local_venv",
+  "error_test_count": 0,
+  "failed_test_count": 0,
+  "generated_at": "2026-04-25T07:18:37.583045+00:00",
+  "junit_xml": null,
+  "metadata": {
+    "covered_proof_steps": [
+      "contract"
+    ],
+    "failed_proof_steps": [],
+    "includes_optional_proof_steps": false,
+    "omitted_proof_steps": [
+      "pipeline",
+      "backend-baseline",
+      "frontend",
+      "integration",
+      "mongo-live",
+      "sidecar",
+      "autonomy-optional"
+    ],
+    "passed_proof_steps": [
+      "contract"
+    ],
+    "receipt_scope": "This receipt covers only the proof steps listed in covered_proof_steps.",
+    "steps": [
+      {
+        "collection_issues": [],
+        "counts": {
+          "error_test_count": 0,
+          "failed_test_count": 0,
+          "passed_test_count": 18,
+          "skipped_test_count": 0,
+          "total_test_count": 18
+        },
+        "id": "contract",
+        "junit_xml": "test_reports/pytest/contract-conformance-proof.xml",
+        "name": "Contract conformance proof",
+        "outcome": "passed",
+        "proof_failure_reason": null,
+        "proof_metadata": null,
+        "receipt_json": null,
+        "returncode": 0,
+        "skipped_cases": []
+      }
+    ]
+  },
+  "outcome": "passed",
+  "passed_test_count": 18,
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "proof_tier": "contract",
+  "python_version": "3.9.7",
+  "repo_fingerprint": "5b3c4e9e17d3e546297d439afd8f0d7f4254b1c7",
+  "schema_version": 2,
+  "service_connection_mode": "none",
+  "service_endpoint": "n/a",
+  "skipped_test_count": 0,
+  "timestamp": "2026-04-25T07:18:37.583045+00:00",
+  "total_test_count": 18
+}
