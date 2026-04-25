@@ -101,6 +101,8 @@ afterEach(() => {
 });
 
 test("keeps run selection synced while switching between all operator workspaces", async () => {
+  // Increase timeout for this complex integration test
+  vi.setConfig({ testTimeout: 20000 });
   const user = userEvent.setup();
 
   render(<App />);

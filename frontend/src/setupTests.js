@@ -1,5 +1,11 @@
 import "@testing-library/jest-dom/vitest";
+import { cleanup } from "@testing-library/react";
+import { afterEach } from "vitest";
 import { TextDecoder, TextEncoder } from "util";
+
+afterEach(() => {
+  cleanup();
+});
 
 if (!window.TextEncoder) {
 	window.TextEncoder = TextEncoder;

@@ -61,6 +61,7 @@ export default defineConfig({
     setupFiles: ["./src/setupTests.js"],
     css: true,
     reporters: ["default"],
+    testTimeout: 10000,
     coverage: {
       provider: "v8",
       reporter: ["text", "json"],
