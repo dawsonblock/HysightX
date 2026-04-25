@@ -132,7 +132,7 @@ class TestHCARuntimeSmoke:
 
         pending_requests = get_pending_requests(run_id)
         assert len(pending_requests) == 1
-        assert pending_requests[0].action_kind == "store_note"
+        assert pending_requests[0]["action_kind"] == "store_note"
 
         event_types = _event_types_for_run(run_id)
         assert event_types[0] == "run_created"

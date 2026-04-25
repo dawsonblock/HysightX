@@ -451,6 +451,7 @@ def test_frontend_uses_shared_api_client_only():
     allowed_frontend_api_files = {
         "frontend/src/lib/api.js",
         "frontend/src/lib/api.test.js",
+        "frontend/src/lib/api.routes.test.js",
         "frontend/src/lib/autonomy-api.js",
         "frontend/src/lib/autonomy-api.test.js",
     }
@@ -639,7 +640,7 @@ def test_frontend_parse_jest_counts_tracks_pending_and_todo_cases(tmp_path):
         encoding="utf-8",
     )
 
-    counts, skipped_cases, metadata = proof_frontend._parse_jest_counts(
+    counts, skipped_cases, metadata = proof_frontend._parse_vitest_counts(
         report_path
     )
 
@@ -912,6 +913,7 @@ def test_non_test_code_does_not_append_grants_directly():
         if (
             "/tests/" in relative_path
             or relative_path.startswith("backend/tests/")
+            or relative_path.startswith("tests/")
         ):
             continue
         if relative_path in allowed_paths:
@@ -1116,6 +1118,7 @@ def test_non_test_python_code_keeps_process_and_network_calls_bounded():
         "hca/src/hca/executor/sandbox.py",
         "memory_service/config.py",
         "memory_service/controller.py",
+        "scripts/proof_current_tree.py",
         "scripts/proof_frontend.py",
         "scripts/proof_mongo_live.py",
         "scripts/proof_receipt.py",
@@ -1142,6 +1145,7 @@ def test_non_test_python_code_keeps_process_and_network_calls_bounded():
         if (
             "/tests/" in relative_path
             or relative_path.startswith("backend/tests/")
+            or relative_path.startswith("tests/")
         ):
             continue
         if relative_path in allowed_paths:
@@ -1173,7 +1177,7 @@ def test_optional_proof_harnesses_and_receipts_are_documented_in_repo_contract()
     )
 
     assert "PROOF_RECEIPT_PATH" in frontend_harness
-    assert "JEST_REPORT_PATH" in frontend_harness
+    assert "VITEST_REPORT_PATH" in frontend_harness
     assert "FIXTURE_JUNIT_PATH" in frontend_harness
     assert "write_proof_receipt(" in frontend_harness
     assert "frontend-proof-v1" in frontend_harness
@@ -1192,7 +1196,7 @@ def test_optional_proof_harnesses_and_receipts_are_documented_in_repo_contract()
     assert 'name="Frontend tests"' in frontend_harness
     assert 'name="Frontend build"' in frontend_harness
     assert "--check-fixture-drift" in frontend_harness
-    assert "--json" in frontend_harness
+    assert "--reporter=json" in frontend_harness
     assert "--outputFile=" in frontend_harness
     assert "make test-bootstrap-frontend" in frontend_harness
     assert "docker_disposable_local" in mongo_harness

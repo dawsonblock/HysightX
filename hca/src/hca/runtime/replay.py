@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections import Counter
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 from hca.common.enums import EventType, RuntimeState
@@ -155,16 +156,50 @@ def _approval_summary(
     decision = get_latest_decision(run_id, target)
     grant = get_grant(run_id, target)
     consumption = get_consumption(run_id, target)
-    status["request"] = (
-        request.model_dump(mode="json") if request else None
-    )
-    status["decision"] = (
-        decision.model_dump(mode="json") if decision else None
-    )
-    status["grant"] = grant.model_dump(mode="json") if grant else None
-    status["consumption"] = (
-        consumption.model_dump(mode="json") if consumption else None
-    )
+    
+    # Clean up and transform records for response models
+    def _clean_record(record, is_decision=False):
+        if record is None:
+            return None
+        if hasattr(record, "model_dump"):
+            return record.model_dump(mode="json")
+        if isinstance(record, dict):
+            cleaned = dict(record)
+            cleaned.pop("record_type", None)
+            cleaned.pop("status", None)  # Remove status field not expected by API models
+            # Only remove token from decision records, not from grant/consumption
+            if is_decision:
+                cleaned.pop("token", None)
+            return cleaned
+        return record
+    
+    # Transform decision record to match RunApprovalDecisionResponse
+    def _transform_decision(record):
+        if record is None:
+            return None
+        cleaned = _clean_record(record, is_decision=True)
+        # Map record type to decision field
+        rec_type = record.get("record_type", "")
+        if rec_type == "grant":
+            cleaned["decision"] = "granted"
+        elif rec_type == "denial":
+            cleaned["decision"] = "denied"
+        else:
+            cleaned["decision"] = rec_type
+        # Map timestamps - ensure decided_at exists (required field)
+        # Map granted_at to decided_at for grant records
+        if "granted_at" in cleaned:
+            cleaned["decided_at"] = cleaned.pop("granted_at")
+        if "timestamp" in cleaned:
+            cleaned["decided_at"] = cleaned.pop("timestamp")
+        if "decided_at" not in cleaned:
+            cleaned["decided_at"] = datetime.now(timezone.utc).isoformat()
+        return cleaned
+    
+    status["request"] = _clean_record(request)
+    status["decision"] = _transform_decision(decision)
+    status["grant"] = _clean_record(grant)
+    status["consumption"] = _clean_record(consumption)
     return status
 
 
