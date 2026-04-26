@@ -52,9 +52,10 @@ RECEIPT_NAMES = [
     "frontend",
 ]
 
-# Matches **Commit:** or **Commit (proved):** followed by a 40-hex SHA.
+# Matches **Commit:**, **Commit (proved):**, **Proved commit:** or **Seal commit:** followed by a 40-hex SHA.
+# For split-commit seals, we extract the Proved commit (6 test receipts must match this).
 SEAL_COMMIT_RE = re.compile(
-    r"\*\*Commit(?:\s*\(proved\))?:\*\*\s*`([0-9a-f]{40})`", re.IGNORECASE
+    r"\*\*(?:Proved\s+)?Commit(?:\s*\(proved\))?:\*\*\s*`([0-9a-f]{40})`", re.IGNORECASE
 )
 
 
