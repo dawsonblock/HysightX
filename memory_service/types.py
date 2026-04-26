@@ -64,6 +64,11 @@ class CandidateMemory(ContractModel):
     source: Provenance = Field(default_factory=Provenance)
     tags: List[str] = Field(default_factory=list)
     metadata: Dict[str, Any] = Field(default_factory=dict)
+    user_id: str = "default"
+    embedding: Optional[List[float]] = None
+
+
+RetrievalMode = Literal["bm25", "semantic", "hybrid"]
 
 
 class RetrievalQuery(ContractModel):
@@ -74,6 +79,9 @@ class RetrievalQuery(ContractModel):
     run_id: Optional[str] = None
     include_expired: bool = False
     intent: IntentType = "general"
+    user_id: str = "default"
+    embedding: Optional[List[float]] = None
+    mode: RetrievalMode = "bm25"
 
 
 # Outbound.

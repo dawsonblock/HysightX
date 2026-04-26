@@ -100,7 +100,12 @@
           "type": "array",
           "items": { "type": "string" }
         },
-        "metadata": { "$ref": "#/definitions/FlexibleObject" }
+        "metadata": { "$ref": "#/definitions/FlexibleObject" },
+        "user_id": { "type": "string", "default": "default" },
+        "embedding": {
+          "type": ["array", "null"],
+          "items": { "type": "number" }
+        }
       }
     },
     "RetrievalQuery": {
@@ -124,6 +129,16 @@
         "intent": {
           "type": "string",
           "enum": ["general", "historical_fact", "episodic_recall", "belief_check"]
+        },
+        "user_id": { "type": "string", "default": "default" },
+        "embedding": {
+          "type": ["array", "null"],
+          "items": { "type": "number" }
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["bm25", "semantic", "hybrid"],
+          "default": "bm25"
         }
       }
     },

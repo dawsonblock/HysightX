@@ -1,5 +1,36 @@
 # Release Notes
 
+## hysight-47 (2026-04-26)
+
+**Base commit:** `TBD — filled after final proof stamp`
+**Classification:** sealed local-core release
+
+- Baseline: 123/0 — pipeline (7), backend-baseline (98), contract (18)
+- Autonomy: 66/0
+- Frontend: 71/0 — all 5 stages (runtime-verify, fixture-drift, lint, Jest, build)
+- Live sidecar: CARRY-FORWARD from hysight-42 (13/0); reproducible subtree hash `2ccc27c4c74694b733400110130c177dcef19c8bce1046ca1053abee9f93d99e` (243 files, `python scripts/hash_sidecar_subtree.py`)
+- Live Mongo: not rerun; historical only
+- Contract expansion: `CandidateMemory` now exposes `user_id` and `embedding`; `RetrievalQuery` now exposes `user_id`, `embedding`, and `mode` (bm25/semantic/hybrid) — matching Rust sidecar fields; all new fields optional with defaults, zero breaking change
+- Tooling: `scripts/validate_release_seal.py` enforces single-commit proof identity; `scripts/hash_sidecar_subtree.py` makes sidecar carry-forward hash reproducible
+- See `RELEASE_SEAL_HYSIGHT47.md`, `FULL_PROOF_SUMMARY_HYSIGHT47.md`, and `OPTIONAL_PROOF_SUMMARY_HYSIGHT47.md` for version-specific proof evidence.
+
+---
+
+## hysight-46 (2026-04-26)
+
+**Base commit:** `2a32944ede6ff78579c7cad42163574229459b53`
+**Classification:** sealed local-core release (repair pass over hysight-45)
+
+- Baseline: 123/0 — pipeline (7), backend-baseline (98), contract (18)
+- Autonomy: 66/0
+- Frontend: 71/0 — all 5 stages
+- Live sidecar: CARRY-FORWARD from hysight-42 (13/0)
+- Live Mongo: not rerun; historical only
+- Fixes applied vs hysight-45: `backend-baseline.json` was stale with 5 failures (regenerated); `contract.json` and `pipeline.json` were stale (regenerated); `run_command` approval-override removed from `_effective_tool_policy()`; runtime leftovers untracked; `frontend/craco.config.js` deleted (CRA residue, project uses Vite)
+- See `RELEASE_SEAL_HYSIGHT46.md` for version-specific proof evidence.
+
+---
+
 ## hysight-45 (2026-04-21)
 
 **Base commit:** `189980254f92214198fff7d561ca0405c7ccce82`
