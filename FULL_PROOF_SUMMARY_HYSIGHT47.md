@@ -2,7 +2,7 @@
 
 **Release tag:** hysight-47
 **Proved commit:** `f95086655d0810ccb279e15ce8cf7ffca342af8a` (6 test receipts)
-**Seal commit:** `aea06f7dbf4aa75076bb440db64a8761ac1dac48`
+**Seal commit:** `bb3fccb42cc6471a45b7dbed4bd0bf24d70f8fa0`
 **Sealed at:** 2026-04-26T19:55:00Z
 **Platform:** macOS, local repo `.venv`
 **Classification:** **sealed local-core release**
@@ -84,7 +84,7 @@ All new fields are optional with defaults matching the Rust sidecar. Zero breaki
 ## Classification Rationale
 
 Baseline, autonomy, and frontend proofs ran locally at the proved commit (`f9508665`).
-The tree receipt was generated at the seal commit (`aea06f7d`) and provides a
+The tree receipt was generated at the seal commit (`bb3fccb4`) and provides a
 reproducible source fingerprint (git_dirty=false). Live Rust sidecar was not
 re-run; last proof stands from hysight-42 and is verified via reproducible
 subtree hash. Classification is "sealed local-core release".

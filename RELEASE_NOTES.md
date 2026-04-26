@@ -3,7 +3,7 @@
 ## hysight-47 (2026-04-26)
 
 **Proved commit:** `f95086655d0810ccb279e15ce8cf7ffca342af8a` (6 test receipts)
-**Seal commit:** `aea06f7dbf4aa75076bb440db64a8761ac1dac48`
+**Seal commit:** `bb3fccb42cc6471a45b7dbed4bd0bf24d70f8fa0`
 **Classification:** sealed local-core release
 
 - Baseline: 123/0 — pipeline (7), backend-baseline (98), contract (18)

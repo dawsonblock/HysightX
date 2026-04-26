@@ -2,7 +2,7 @@
 
 **Release tag:** hysight-47
 **Proved commit:** `f95086655d0810ccb279e15ce8cf7ffca342af8a` (6 test receipts)
-**Seal commit:** `aea06f7dbf4aa75076bb440db64a8761ac1dac48`
+**Seal commit:** `bb3fccb42cc6471a45b7dbed4bd0bf24d70f8fa0`
 **Sealed at:** 2026-04-26T19:55:00Z
 **Classification:** **sealed local-core release**
 
@@ -39,10 +39,9 @@ Validated by `python scripts/validate_release_seal.py` (full, no flags).
 | `artifacts/proof/baseline.json` | f9508665 | passed | 123 |
 | `artifacts/proof/autonomy-optional.json` | f9508665 | passed | 66 |
 | `artifacts/proof/frontend.json` | f9508665 | passed | 71 |
-| `artifacts/proof/current_tree_receipt.json` | aea06f7d | pass | — |
+| `artifacts/proof/current_tree_receipt.json` | bb3fccb4 | pass | — |
 
-The 6 test receipts were generated at the proved commit. The tree receipt is
-always generated after test completion (at the seal commit) and provides a
+The tree receipt was generated at the seal commit (`bb3fccb4`) and provides a
 reproducible source fingerprint of the release tree.
 
 ---
