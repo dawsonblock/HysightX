@@ -1,10 +1,10 @@
 {
   "command": "/Users/dawsonblock/Downloads/HysightX/.venv/bin/python scripts/run_tests.py --frontend",
-  "commit_sha": "a3fdd9842e965ea3efaa709e5c5f1e29d1a754ac",
+  "commit_sha": "2a32944ede6ff78579c7cad42163574229459b53",
   "environment_mode": "repo_local_venv",
   "error_test_count": 0,
   "failed_test_count": 0,
-  "generated_at": "2026-04-26T07:38:23.463476+00:00",
+  "generated_at": "2026-04-26T08:29:24.144965+00:00",
   "junit_xml": null,
   "metadata": {
     "covered_proof_steps": [
@@ -97,7 +97,7 @@
               "returncode": 0,
               "status": "passed",
               "stderr_tail": null,
-              "stdout_tail": ".                                                                        [100%]\n- generated xml file: /Users/dawsonblock/Downloads/HysightX/test_reports/frontend-fixture-drift.xml -\n1 passed, 55 deselected in 0.27s"
+              "stdout_tail": ".                                                                        [100%]\n- generated xml file: /Users/dawsonblock/Downloads/HysightX/test_reports/frontend-fixture-drift.xml -\n1 passed, 55 deselected in 0.30s"
             },
             {
               "command": "yarn lint",
@@ -105,7 +105,7 @@
               "returncode": 0,
               "status": "passed",
               "stderr_tail": null,
-              "stdout_tail": "yarn run v1.22.22\n$ eslint .\nDone in 1.31s."
+              "stdout_tail": "yarn run v1.22.22\n$ eslint .\nDone in 1.52s."
             },
             {
               "command": "yarn test --reporter=json --outputFile=/Users/dawsonblock/Downloads/HysightX/test_reports/frontend-vitest.json",
@@ -128,7 +128,7 @@
               "returncode": 0,
               "status": "passed",
               "stderr_tail": null,
-              "stdout_tail": "yarn run v1.22.22\n$ vitest run --reporter=json --outputFile=/Users/dawsonblock/Downloads/HysightX/test_reports/frontend-vitest.json\nJSON report written to /Users/dawsonblock/Downloads/HysightX/test_reports/frontend-vitest.json\nDone in 7.88s."
+              "stdout_tail": "yarn run v1.22.22\n$ vitest run --reporter=json --outputFile=/Users/dawsonblock/Downloads/HysightX/test_reports/frontend-vitest.json\nJSON report written to /Users/dawsonblock/Downloads/HysightX/test_reports/frontend-vitest.json\nDone in 6.80s."
             },
             {
               "command": "yarn build",
@@ -136,7 +136,7 @@
               "returncode": 0,
               "status": "passed",
               "stderr_tail": null,
-              "stdout_tail": "yarn run v1.22.22\n$ vite build\nvite v6.4.2 building for production...\ntransforming...\n\u2713 2000 modules transformed.\nrendering chunks...\ncomputing gzip size...\nbuild/index.html                      5.89 kB \u2502 gzip:   2.53 kB\nbuild/assets/operator-c88vf3tO.css    3.73 kB \u2502 gzip:   1.19 kB\nbuild/assets/autonomy-Cy9VbE4n.css    9.65 kB \u2502 gzip:   2.38 kB\nbuild/assets/index-CIFB-lvj.css      75.97 kB \u2502 gzip:  14.16 kB\nbuild/assets/autonomy-Bfg4Bsvv.js   106.83 kB \u2502 gzip:  30.02 kB\nbuild/assets/operator-BKGAmPjt.js   117.12 kB \u2502 gzip:  28.25 kB\nbuild/assets/index-B_MWYVuz.js      128.34 kB \u2502 gzip:  36.32 kB\nbuild/assets/vendor-CZcJVSeP.js     361.39 kB \u2502 gzip: 114.24 kB\n\u2713 built in 2.77s\nDone in 3.03s."
+              "stdout_tail": "yarn run v1.22.22\n$ vite build\nvite v6.4.2 building for production...\ntransforming...\n\u2713 2000 modules transformed.\nrendering chunks...\ncomputing gzip size...\nbuild/index.html                      5.89 kB \u2502 gzip:   2.53 kB\nbuild/assets/operator-c88vf3tO.css    3.73 kB \u2502 gzip:   1.19 kB\nbuild/assets/autonomy-Cy9VbE4n.css    9.65 kB \u2502 gzip:   2.38 kB\nbuild/assets/index-CIFB-lvj.css      75.97 kB \u2502 gzip:  14.16 kB\nbuild/assets/autonomy-Bfg4Bsvv.js   106.83 kB \u2502 gzip:  30.02 kB\nbuild/assets/operator-BKGAmPjt.js   117.12 kB \u2502 gzip:  28.25 kB\nbuild/assets/index-B_MWYVuz.js      128.34 kB \u2502 gzip:  36.32 kB\nbuild/assets/vendor-CZcJVSeP.js     361.39 kB \u2502 gzip: 114.24 kB\n\u2713 built in 2.59s\nDone in 2.83s."
             }
           ],
           "yarn_version": "1.22.22"
@@ -152,11 +152,11 @@
   "platform": "macOS-26.2-arm64-arm-64bit",
   "proof_tier": "frontend",
   "python_version": "3.9.7",
-  "repo_fingerprint": "b3d9885f0273f246de9f06453cad5210083a5cde",
+  "repo_fingerprint": "2a57f70554ae06f890a5d982a98dabbc35f9ce04",
   "schema_version": 2,
   "service_connection_mode": "none",
   "service_endpoint": "n/a",
   "skipped_test_count": 0,
-  "timestamp": "2026-04-26T07:38:23.463476+00:00",
+  "timestamp": "2026-04-26T08:29:24.144965+00:00",
   "total_test_count": 71
 }

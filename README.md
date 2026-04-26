@@ -168,23 +168,21 @@ Frontend proof details:
 
 ## Release Seal Status
 
-The current Hysight-main 45 release is sealed from commit
-`189980254f92214198fff7d561ca0405c7ccce82`.
+The current release is **Hysight-46**, sealed from commit
+`2a32944ede6ff78579c7cad42163574229459b53`.
 
 **Classification: sealed local-core release**
 
 - Baseline proof: 123 passed, 0 failed (7 pipeline + 98 backend-baseline + 18 contract)
-- Autonomy optional proof: 66 passed, 0 failed (+5 aggregate workspace tests)
-- Frontend proof: 67 passed, 0 failed (all 5 stages)
-- Live Rust sidecar: CARRY-FORWARD from hysight-42 (13/0, no sidecar code changed)
-- Live Mongo proof was not rerun in this release seal and is not counted as fresh evidence
+- Autonomy optional proof: 66 passed, 0 failed
+- Frontend proof: 71 passed, 0 failed (all 5 stages: runtime-verification, fixture-drift, lint, vitest, build)
+- Live Rust sidecar: CARRY-FORWARD from hysight-42 (13/0, no sidecar source changed)
+- Live Mongo proof was not rerun in this release and is not counted as fresh evidence
 
-Authoritative 45 release-truth documents live in `RELEASE_SEAL_HYSIGHT45.md`,
-`FULL_PROOF_SUMMARY_HYSIGHT45.md`, and `OPTIONAL_PROOF_SUMMARY_HYSIGHT45.md`.
-Quarantine ledger: `artifacts/proof/release_quarantine_hysight45.md`.
+Authoritative release-truth document: `RELEASE_SEAL_HYSIGHT46.md`.
 
-Older Hysight 27–42 summary files remain in the repository as audit history only and are not
-proof for 45.
+Older Hysight 27–45 summary files remain in the repository as audit history only and are not
+proof for the current release.
 
 ## Run Modes
 

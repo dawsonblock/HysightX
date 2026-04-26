@@ -1,19 +1,16 @@
 {
   "command": "/Users/dawsonblock/Downloads/HysightX/.venv/bin/python scripts/run_tests.py --baseline-step backend-baseline",
-  "commit_sha": "88028d699c0f9ca0734d16a484b8e2cdfa37b9b6",
+  "commit_sha": "2a32944ede6ff78579c7cad42163574229459b53",
   "environment_mode": "repo_local_venv",
   "error_test_count": 0,
-  "failed_test_count": 5,
-  "failure_reason": "[Backend baseline proof] exited with code 1",
-  "generated_at": "2026-04-25T06:53:35.194566+00:00",
+  "failed_test_count": 0,
+  "generated_at": "2026-04-26T08:28:32.319384+00:00",
   "junit_xml": null,
   "metadata": {
     "covered_proof_steps": [
       "backend-baseline"
     ],
-    "failed_proof_steps": [
-      "backend-baseline"
-    ],
+    "failed_proof_steps": [],
     "includes_optional_proof_steps": false,
     "omitted_proof_steps": [
       "pipeline",
@@ -24,40 +21,42 @@
       "sidecar",
       "autonomy-optional"
     ],
-    "passed_proof_steps": [],
+    "passed_proof_steps": [
+      "backend-baseline"
+    ],
     "receipt_scope": "This receipt covers only the proof steps listed in covered_proof_steps.",
     "steps": [
       {
         "collection_issues": [],
         "counts": {
           "error_test_count": 0,
-          "failed_test_count": 5,
-          "passed_test_count": 93,
+          "failed_test_count": 0,
+          "passed_test_count": 98,
           "skipped_test_count": 0,
           "total_test_count": 98
         },
         "id": "backend-baseline",
         "junit_xml": "test_reports/pytest/backend-baseline-proof.xml",
         "name": "Backend baseline proof",
-        "outcome": "failed",
+        "outcome": "passed",
         "proof_failure_reason": null,
         "proof_metadata": null,
         "receipt_json": null,
-        "returncode": 1,
+        "returncode": 0,
         "skipped_cases": []
       }
     ]
   },
-  "outcome": "failed",
-  "passed_test_count": 93,
+  "outcome": "passed",
+  "passed_test_count": 98,
   "platform": "macOS-26.2-arm64-arm-64bit",
   "proof_tier": "backend-baseline",
   "python_version": "3.9.7",
-  "repo_fingerprint": "5b3c4e9e17d3e546297d439afd8f0d7f4254b1c7",
+  "repo_fingerprint": "2a57f70554ae06f890a5d982a98dabbc35f9ce04",
   "schema_version": 2,
   "service_connection_mode": "none",
   "service_endpoint": "n/a",
   "skipped_test_count": 0,
-  "timestamp": "2026-04-25T06:53:35.194566+00:00",
+  "timestamp": "2026-04-26T08:28:32.319384+00:00",
   "total_test_count": 98
 }
