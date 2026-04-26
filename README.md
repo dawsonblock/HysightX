@@ -168,9 +168,8 @@ Frontend proof details:
 
 ## Release Seal Status
 
-The current release is **Hysight-47**.
-Proved at commit `960e96b3e191de5266f09fc6a4b2cb1d06ed0c63` (all 6 proof receipts, unanimous).
-Packaged at commit `d1e16d8de7d13b8365628dda2304ceef32209a44` (seal docs, tree receipt, pushed HEAD).
+The current release is **Hysight-47**, sealed at commit
+`7f88256049cf3e7ad7fcc2c3ec7741957417134a`.
 
 **Classification: sealed local-core release**
 

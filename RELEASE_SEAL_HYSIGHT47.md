@@ -1,7 +1,7 @@
 # Hysight-47 Release Seal
 
 **Release tag:** hysight-47
-**Commit:** `TBD`
+**Commit:** `7f88256049cf3e7ad7fcc2c3ec7741957417134a`
 **Sealed at:** 2026-04-26T19:30:00Z
 **Classification:** **sealed local-core release**
 

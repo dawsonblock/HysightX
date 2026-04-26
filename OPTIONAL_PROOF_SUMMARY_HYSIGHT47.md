@@ -1,7 +1,7 @@
 # Hysight-47 Optional Proof Summary
 
 **Release tag:** hysight-47
-**Commit (proved):** `960e96b3e191de5266f09fc6a4b2cb1d06ed0c63`
+**Commit:** `7f88256049cf3e7ad7fcc2c3ec7741957417134a`
 **Sealed at:** 2026-04-26
 
 > Starting with Hysight-47, `RELEASE_SEAL_HYSIGHTNN.md` is the single
