@@ -1,15 +1,15 @@
 {
   "schema_version": "1",
-  "timestamp": "2026-04-26T08:39:28.786251Z",
+  "timestamp": "2026-04-26T08:41:12.853951Z",
   "platform": "macOS-26.2-arm64-arm-64bit",
   "python_version": "3.9.7 (default, Dec 17 2025, 17:53:57) \n[Clang 17.0.0 (clang-1700.6.3.2)]",
   "node_version": "v24.15.0",
   "yarn_version": "1.22.22",
   "cargo_version": "cargo 1.94.0 (85eff7c80 2026-01-15)",
   "rustc_version": "rustc 1.94.0 (4a4ef493e 2026-03-02)",
-  "git_commit": "3d4065a8f7724a9e4d7bb42ca1a8641cb104ebbe",
+  "git_commit": "c2ed1d28503e8eee8ab880df9a7c92ff6a4394e6",
   "git_dirty": false,
-  "source_fingerprint": "cacefdbb7a8159c0e3ac97fc00e8ca92bf93f373a3aa68fdf84ed11cef024b1d",
+  "source_fingerprint": "f3965c1cc8863951dcac0321a70881817a2223fafc5f8d274a2126bc210f41cc",
   "source_files_hashed": 672,
   "commands_run": [
     "python scripts/proof_current_tree.py"
