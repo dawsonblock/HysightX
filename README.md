@@ -168,8 +168,8 @@ Frontend proof details:
 
 ## Release Seal Status
 
-The current release is **Hysight-46**, sealed from commit
-`2a32944ede6ff78579c7cad42163574229459b53`.
+The current release is **Hysight-47**, sealed from commit
+`8ae13a63c58818dfe7182c9e55a201959407a697`.
 
 **Classification: sealed local-core release**
 
@@ -179,9 +179,9 @@ The current release is **Hysight-46**, sealed from commit
 - Live Rust sidecar: CARRY-FORWARD from hysight-42 (13/0, no sidecar source changed)
 - Live Mongo proof was not rerun in this release and is not counted as fresh evidence
 
-Authoritative release-truth document: `RELEASE_SEAL_HYSIGHT46.md`.
+Authoritative release-truth document: `RELEASE_SEAL_HYSIGHT47.md`.
 
-Older Hysight 27–45 summary files remain in the repository as audit history only and are not
+Older Hysight 27–46 summary files remain in the repository as audit history only and are not
 proof for the current release.
 
 ## Run Modes
