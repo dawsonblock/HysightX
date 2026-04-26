@@ -25,6 +25,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from typing import Optional
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PROOF_DIR = REPO_ROOT / "artifacts" / "proof"
@@ -63,7 +64,7 @@ def _extract_seal_commit(seal_path: Path) -> str:
     return match.group(1)
 
 
-def _find_seal_file(explicit: str | None) -> Path:
+def _find_seal_file(explicit: Optional[str]) -> Path:
     if explicit:
         p = Path(explicit)
         if not p.is_absolute():

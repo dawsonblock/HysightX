@@ -21,6 +21,8 @@ Exit codes:
     1 — --verify mismatch
     2 — usage / IO error
 """
+from __future__ import annotations
+
 import argparse
 import hashlib
 import sys
