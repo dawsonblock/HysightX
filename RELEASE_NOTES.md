@@ -2,7 +2,8 @@
 
 ## hysight-47 (2026-04-26)
 
-**Base commit:** `ea65d66580f885114b61e51cdea59db6f5249447`
+**Commit (proved):** `960e96b3e191de5266f09fc6a4b2cb1d06ed0c63`
+**Commit (packaged):** `d1e16d8de7d13b8365628dda2304ceef32209a44`
 **Classification:** sealed local-core release
 
 - Baseline: 123/0 — pipeline (7), backend-baseline (98), contract (18)
