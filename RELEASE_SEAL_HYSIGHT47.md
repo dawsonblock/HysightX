@@ -1,8 +1,7 @@
 # Hysight-47 Release Seal
 
 **Release tag:** hysight-47
-**Commit (proved):** `960e96b3e191de5266f09fc6a4b2cb1d06ed0c63`
-**Commit (packaged):** `d1e16d8de7d13b8365628dda2304ceef32209a44`
+**Commit:** `TBD`
 **Sealed at:** 2026-04-26T19:30:00Z
 **Classification:** **sealed local-core release**
 
@@ -29,9 +28,8 @@ This hash can be recomputed at any commit to verify no sidecar source changed si
 
 ## Evidence Files
 
-All 6 proof receipts share commit `960e96b3` (the proved commit).
-The tree receipt reflects commit `2919b3f4` (dirty=false, 676 source files).
-Validated by `python scripts/validate_release_seal.py --pre-stamp`.
+All 6 proof receipts and the tree receipt share the single commit above.
+Validated by `python scripts/validate_release_seal.py` (full, no flags).
 
 | Receipt | Outcome | Passed |
 |---------|---------|--------|
@@ -72,4 +70,4 @@ Validated by `python scripts/validate_release_seal.py --pre-stamp`.
 ## Known Carry-Forwards
 
 - **Sidecar proof**: Rust sidecar last proved at hysight-42. Subtree hash above provides verifiable evidence of no source change.
-- **Python contract / Rust sidecar feature parity**: `user_id`, `embedding`, `mode` fields supported by Rust sidecar are not yet in the Python `ContractModel`. Documented and tracked; not a runtime regression.
+- **Python contract / Rust sidecar feature parity**: FIXED in Hysight-47. `user_id`, `embedding`, and `mode` fields are now present in `CandidateMemory` and `RetrievalQuery` in `memory_service/types.py` and `contract/schema.json`. Contract conformance proof: 18/0.

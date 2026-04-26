@@ -6,19 +6,26 @@ tree is consistent with the active release seal.
 Usage:
     python scripts/validate_release_seal.py
     python scripts/validate_release_seal.py --seal RELEASE_SEAL_HYSIGHT47.md
-    python scripts/validate_release_seal.py --pre-stamp  # skip commit-match check
+    python scripts/validate_release_seal.py --pre-stamp  # outcomes only, no commit check
+
+Seal format understood:
+    **Commit:** `<40-hex>`                  (single-commit seals — preferred)
+    **Commit (proved):** `<40-hex>`         (split-commit seals — legacy)
 
 Exit codes:
     0 — all checks passed
     1 — one or more checks failed (diff table printed to stderr)
     2 — usage / IO error
 
-Checks performed (unless --pre-stamp):
-    1. Seal commit == every receipt commit_sha
-    2. Seal commit == current_tree_receipt.json git_commit
+Checks performed by default (full validation):
+    1. Seal proved-commit == every receipt commit_sha
+    2. Seal proved-commit == current_tree_receipt.json git_commit
     3. current_tree_receipt.json git_dirty == false
     4. Every receipt outcome == "passed"
     5. Every receipt failed_test_count == 0
+
+--pre-stamp skips checks 1-3 (outcomes only). Use only during the stamping
+workflow, never cite it as final release validation.
 """
 import argparse
 import json
@@ -39,8 +46,9 @@ RECEIPT_NAMES = [
     "frontend",
 ]
 
+# Matches **Commit:** or **Commit (proved):** followed by a 40-hex SHA.
 SEAL_COMMIT_RE = re.compile(
-    r"\*\*Commit:\*\*\s*`([0-9a-f]{40})`", re.IGNORECASE
+    r"\*\*Commit(?:\s*\(proved\))?:\*\*\s*`([0-9a-f]{40})`", re.IGNORECASE
 )
 
 
@@ -57,7 +65,10 @@ def _extract_seal_commit(seal_path: Path) -> str:
     match = SEAL_COMMIT_RE.search(text)
     if not match:
         print(
-            f"ERROR: could not find '**Commit:** `<40-hex>`' in {seal_path}",
+            "ERROR: could not find a commit SHA in seal file.\n"
+            "  Expected: **Commit:** `<40-hex>`\n"
+            "       or: **Commit (proved):** `<40-hex>`\n"
+            f"  File: {seal_path}",
             file=sys.stderr,
         )
         sys.exit(2)
@@ -102,7 +113,7 @@ def main() -> int:
     seal_path = _find_seal_file(args.seal)
     seal_commit = _extract_seal_commit(seal_path)
 
-    failures: list[str] = []
+    failures: list[str] = []  # type: ignore[type-arg]
 
     print(f"Seal file:   {seal_path.name}")
     print(f"Seal commit: {seal_commit}")
