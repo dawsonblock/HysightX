@@ -1,7 +1,7 @@
 # Hysight-47 Optional Proof Summary
 
 **Release tag:** hysight-47
-**Commit:** `TBD — filled after final proof stamp`
+**Commit:** `ea65d66580f885114b61e51cdea59db6f5249447`
 **Sealed at:** 2026-04-26
 
 > Starting with Hysight-47, `RELEASE_SEAL_HYSIGHTNN.md` is the single

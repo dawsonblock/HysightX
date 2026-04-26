@@ -1,8 +1,8 @@
 # Hysight-47 Release Seal
 
 **Release tag:** hysight-47
-**Commit:** `c2ed1d28503e8eee8ab880df9a7c92ff6a4394e6`
-**Sealed at:** 2026-04-26T08:39:00Z
+**Commit:** `ea65d66580f885114b61e51cdea59db6f5249447`
+**Sealed at:** 2026-04-26T14:00:00Z
 **Classification:** **sealed local-core release**
 
 ---
@@ -28,7 +28,7 @@ This hash can be recomputed at any commit to verify no sidecar source changed si
 
 ## Evidence Files
 
-All proof receipts from the same commit listed above.
+All proof receipts from the same commit listed above (validated by `scripts/validate_release_seal.py`).
 
 | Receipt | Outcome | Passed |
 |---------|---------|--------|
