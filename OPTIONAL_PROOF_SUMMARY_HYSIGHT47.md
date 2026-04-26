@@ -1,8 +1,9 @@
 # Hysight-47 Optional Proof Summary
 
 **Release tag:** hysight-47
-**Commit:** `f95086655d0810ccb279e15ce8cf7ffca342af8a`
-**Sealed at:** 2026-04-26
+**Proved commit:** `f95086655d0810ccb279e15ce8cf7ffca342af8a`
+**Seal commit:** `aea06f7dbf4aa75076bb440db64a8761ac1dac48`
+**Sealed at:** 2026-04-26T19:55:00Z
 
 > Starting with Hysight-47, `RELEASE_SEAL_HYSIGHTNN.md` is the single
 > authoritative release document. Optional proof summary files are supplementary

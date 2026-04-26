@@ -1,14 +1,18 @@
 # Hysight-47 Full Proof Summary
 
 **Release tag:** hysight-47
-**Commit:** `f95086655d0810ccb279e15ce8cf7ffca342af8a`
-**Sealed at:** 2026-04-26
+**Proved commit:** `f95086655d0810ccb279e15ce8cf7ffca342af8a` (6 test receipts)
+**Seal commit:** `aea06f7dbf4aa75076bb440db64a8761ac1dac48`
+**Sealed at:** 2026-04-26T19:55:00Z
 **Platform:** macOS, local repo `.venv`
 **Classification:** **sealed local-core release**
 
 > Starting with Hysight-47, `RELEASE_SEAL_HYSIGHTNN.md` is the single
 > authoritative release document. Full and optional proof summary files are
 > supplementary human-readable companions; the seal is the source of truth.
+>
+> The 6 test receipts were generated at the proved commit. The tree receipt
+> was generated at the seal commit and provides a reproducible source fingerprint.
 
 ---
 
@@ -30,7 +34,7 @@
 
 ## What Was Verified
 
-Proof ran against the live repo at the sealed commit (see above).
+The 6 test receipts were generated at the proved commit (`f9508665`).
 The following surfaces were confirmed:
 
 - Canonical baseline proof: pipeline 7 + backend-baseline 98 + contract 18 = 123/0
@@ -72,11 +76,15 @@ All new fields are optional with defaults matching the Rust sidecar. Zero breaki
 
 ### Release tooling
 
-- `scripts/validate_release_seal.py` — asserts all 7 receipt commits match the seal commit before packaging
+- `scripts/validate_release_seal.py` — validates that 6 test receipts match the proved commit and tree receipt has git_dirty=false
 - `scripts/hash_sidecar_subtree.py` — deterministic SHA-256 of sidecar source tree for reproducible carry-forward verification
 
 ---
 
 ## Classification Rationale
 
-Baseline, autonomy, and frontend proofs ran locally at the sealed commit. All 7 evidence files reference the same commit. Live Rust sidecar was not re-run; last proof stands from hysight-42 and is verified via reproducible subtree hash. Classification is "sealed local-core release".
+Baseline, autonomy, and frontend proofs ran locally at the proved commit (`f9508665`).
+The tree receipt was generated at the seal commit (`aea06f7d`) and provides a
+reproducible source fingerprint (git_dirty=false). Live Rust sidecar was not
+re-run; last proof stands from hysight-42 and is verified via reproducible
+subtree hash. Classification is "sealed local-core release".

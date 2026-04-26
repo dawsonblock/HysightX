@@ -1,8 +1,9 @@
 # Hysight-47 Release Seal
 
 **Release tag:** hysight-47
-**Commit:** `f95086655d0810ccb279e15ce8cf7ffca342af8a`
-**Sealed at:** 2026-04-26T19:30:00Z
+**Proved commit:** `f95086655d0810ccb279e15ce8cf7ffca342af8a` (6 test receipts)
+**Seal commit:** `aea06f7dbf4aa75076bb440db64a8761ac1dac48`
+**Sealed at:** 2026-04-26T19:55:00Z
 **Classification:** **sealed local-core release**
 
 ---
@@ -28,18 +29,21 @@ This hash can be recomputed at any commit to verify no sidecar source changed si
 
 ## Evidence Files
 
-All 6 proof receipts and the tree receipt share the single commit above.
 Validated by `python scripts/validate_release_seal.py` (full, no flags).
 
-| Receipt | Outcome | Passed |
-|---------|---------|--------|
-| `artifacts/proof/pipeline.json` | passed | 7 |
-| `artifacts/proof/backend-baseline.json` | passed | 98 |
-| `artifacts/proof/contract.json` | passed | 18 |
-| `artifacts/proof/baseline.json` | passed | 123 |
-| `artifacts/proof/autonomy-optional.json` | passed | 66 |
-| `artifacts/proof/frontend.json` | passed | 71 |
-| `artifacts/proof/current_tree_receipt.json` | pass | — |
+| Receipt | Proved At | Outcome | Passed |
+|---------|-----------|---------|--------|
+| `artifacts/proof/pipeline.json` | f9508665 | passed | 7 |
+| `artifacts/proof/backend-baseline.json` | f9508665 | passed | 98 |
+| `artifacts/proof/contract.json` | f9508665 | passed | 18 |
+| `artifacts/proof/baseline.json` | f9508665 | passed | 123 |
+| `artifacts/proof/autonomy-optional.json` | f9508665 | passed | 66 |
+| `artifacts/proof/frontend.json` | f9508665 | passed | 71 |
+| `artifacts/proof/current_tree_receipt.json` | aea06f7d | pass | — |
+
+The 6 test receipts were generated at the proved commit. The tree receipt is
+always generated after test completion (at the seal commit) and provides a
+reproducible source fingerprint of the release tree.
 
 ---
 

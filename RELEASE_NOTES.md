@@ -2,7 +2,8 @@
 
 ## hysight-47 (2026-04-26)
 
-**Commit:** `f95086655d0810ccb279e15ce8cf7ffca342af8a`
+**Proved commit:** `f95086655d0810ccb279e15ce8cf7ffca342af8a` (6 test receipts)
+**Seal commit:** `aea06f7dbf4aa75076bb440db64a8761ac1dac48`
 **Classification:** sealed local-core release
 
 - Baseline: 123/0 — pipeline (7), backend-baseline (98), contract (18)
@@ -11,7 +12,7 @@
 - Live sidecar: CARRY-FORWARD from hysight-42 (13/0); reproducible subtree hash `2ccc27c4c74694b733400110130c177dcef19c8bce1046ca1053abee9f93d99e` (243 files, `python scripts/hash_sidecar_subtree.py`)
 - Live Mongo: not rerun; historical only
 - Contract expansion: `CandidateMemory` now exposes `user_id` and `embedding`; `RetrievalQuery` now exposes `user_id`, `embedding`, and `mode` (bm25/semantic/hybrid) — matching Rust sidecar fields; all new fields optional with defaults, zero breaking change
-- Tooling: `scripts/validate_release_seal.py` enforces single-commit proof identity; `scripts/hash_sidecar_subtree.py` makes sidecar carry-forward hash reproducible
+- Tooling: `scripts/validate_release_seal.py` validates release seal (6 test receipts at proved commit, tree receipt at seal commit with git_dirty=false); `scripts/hash_sidecar_subtree.py` makes sidecar carry-forward hash reproducible
 - See `RELEASE_SEAL_HYSIGHT47.md`, `FULL_PROOF_SUMMARY_HYSIGHT47.md`, and `OPTIONAL_PROOF_SUMMARY_HYSIGHT47.md` for version-specific proof evidence.
 
 ---
