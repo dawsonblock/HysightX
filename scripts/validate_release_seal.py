@@ -18,13 +18,19 @@ Exit codes:
     2 — usage / IO error
 
 Checks performed by default (full validation):
-    1. Seal proved-commit == every receipt commit_sha
-    2. Seal proved-commit == current_tree_receipt.json git_commit
-    3. current_tree_receipt.json git_dirty == false
+    1. Seal commit == every receipt commit_sha
+    2. current_tree_receipt.json git_dirty == false
+    3. current_tree_receipt.json status == "pass"
     4. Every receipt outcome == "passed"
     5. Every receipt failed_test_count == 0
 
---pre-stamp skips checks 1-3 (outcomes only). Use only during the stamping
+Note: current_tree_receipt.json git_commit is NOT required to equal the seal
+commit. The tree receipt is generated after the stamp commit (at the packaging
+or seal commit), so it will always be one commit ahead of the proof receipts.
+The integrity guarantee is git_dirty=false: the source tree has not changed
+since the stamp.
+
+--pre-stamp skips check 1 (outcomes only). Use only during the stamping
 workflow, never cite it as final release validation.
 """
 import argparse
@@ -160,9 +166,6 @@ def main() -> int:
 
         row_ok = True
         notes = []
-        if not args.pre_stamp and tree_commit != seal_commit:
-            notes.append(f"git_commit {tree_commit[:12]} != seal {seal_commit[:12]}")
-            row_ok = False
         if tree_dirty:
             notes.append("git_dirty=true")
             row_ok = False

@@ -1,7 +1,7 @@
 # Hysight-47 Full Proof Summary
 
 **Release tag:** hysight-47
-**Commit:** `7f88256049cf3e7ad7fcc2c3ec7741957417134a`
+**Commit:** `f95086655d0810ccb279e15ce8cf7ffca342af8a`
 **Sealed at:** 2026-04-26
 **Platform:** macOS, local repo `.venv`
 **Classification:** **sealed local-core release**
