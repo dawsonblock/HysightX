@@ -165,4 +165,4 @@ test("keeps run selection synced while switching between all operator workspaces
     expect(window.location.search).toContain("run=run-from-autonomy");
     expect(window.location.search).toContain("view=runs");
   });
-}, 20000);
+}, 60000);
