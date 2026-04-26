@@ -86,6 +86,13 @@ memvid_service/target/
 storage/
 data/
 
+# Process and server runtime leftovers
+logs/*.log
+logs/*.pid
+
+# Proof sidecar live data (not source artifacts)
+artifacts/proof/sidecar-data/
+
 memory/test_credentials.md
 
 # Mobile development

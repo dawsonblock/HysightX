@@ -710,16 +710,6 @@ def _effective_tool_policy(
                 "user_interruption_burden": 0.0,
             }
         )
-    if tool.name == "run_command":
-        policy.update(
-            {
-                "action_class": ActionClass.low,
-                "requires_approval": False,
-                "risk": min(tool.risk, 0.18),
-                "cost": min(tool.cost, 0.18),
-                "user_interruption_burden": 0.0,
-            }
-        )
     return policy
 
 

@@ -1,0 +1,162 @@
+{
+  "command": "/Users/dawsonblock/Downloads/HysightX/.venv/bin/python scripts/run_tests.py --frontend",
+  "commit_sha": "a3fdd9842e965ea3efaa709e5c5f1e29d1a754ac",
+  "environment_mode": "repo_local_venv",
+  "error_test_count": 0,
+  "failed_test_count": 0,
+  "generated_at": "2026-04-26T07:38:23.463476+00:00",
+  "junit_xml": null,
+  "metadata": {
+    "covered_proof_steps": [
+      "frontend"
+    ],
+    "failed_proof_steps": [],
+    "includes_optional_proof_steps": true,
+    "omitted_proof_steps": [
+      "pipeline",
+      "backend-baseline",
+      "contract",
+      "integration",
+      "mongo-live",
+      "sidecar",
+      "autonomy-optional"
+    ],
+    "passed_proof_steps": [
+      "frontend"
+    ],
+    "receipt_scope": "This receipt covers only the proof steps listed in covered_proof_steps.",
+    "steps": [
+      {
+        "collection_issues": [],
+        "counts": {
+          "error_test_count": 0,
+          "failed_test_count": 0,
+          "passed_test_count": 71,
+          "skipped_test_count": 0,
+          "total_test_count": 71
+        },
+        "id": "frontend",
+        "junit_xml": null,
+        "name": "Frontend proof",
+        "outcome": "passed",
+        "proof_failure_reason": null,
+        "proof_metadata": {
+          "covered_proof_steps": [
+            "frontend"
+          ],
+          "covered_stage_names": [
+            "runtime-verification",
+            "fixture-drift",
+            "lint",
+            "vitest",
+            "build"
+          ],
+          "failed_stage_names": [],
+          "node_version": "v24.15.0",
+          "omitted_proof_steps": [
+            "pipeline",
+            "backend-baseline",
+            "contract",
+            "integration",
+            "mongo-live",
+            "sidecar"
+          ],
+          "passed_stage_names": [
+            "runtime-verification",
+            "fixture-drift",
+            "lint",
+            "vitest",
+            "build"
+          ],
+          "receipt_format": "frontend-proof-v1",
+          "receipt_scope": "This receipt covers only the frontend proof and the stages listed in covered_stage_names.",
+          "skipped_cases": [],
+          "stages": [
+            {
+              "command": "node ./scripts/verify-runtime.js",
+              "name": "runtime-verification",
+              "node_version": "v24.15.0",
+              "returncode": 0,
+              "status": "passed",
+              "stderr_tail": null,
+              "stdout_tail": null,
+              "yarn_version": "1.22.22"
+            },
+            {
+              "command": "/Users/dawsonblock/Downloads/HysightX/.venv/bin/python -m pytest backend/tests/test_server_bootstrap.py -q --check-fixture-drift -k generated_frontend_api_fixtures_match_backend_export -ra --strict-markers --junitxml=/Users/dawsonblock/Downloads/HysightX/test_reports/frontend-fixture-drift.xml",
+              "counts": {
+                "error_test_count": 0,
+                "failed_test_count": 0,
+                "passed_test_count": 1,
+                "skipped_test_count": 0,
+                "total_test_count": 1
+              },
+              "junit_error": null,
+              "junit_xml": "test_reports/frontend-fixture-drift.xml",
+              "name": "fixture-drift",
+              "returncode": 0,
+              "status": "passed",
+              "stderr_tail": null,
+              "stdout_tail": ".                                                                        [100%]\n- generated xml file: /Users/dawsonblock/Downloads/HysightX/test_reports/frontend-fixture-drift.xml -\n1 passed, 55 deselected in 0.27s"
+            },
+            {
+              "command": "yarn lint",
+              "name": "lint",
+              "returncode": 0,
+              "status": "passed",
+              "stderr_tail": null,
+              "stdout_tail": "yarn run v1.22.22\n$ eslint .\nDone in 1.31s."
+            },
+            {
+              "command": "yarn test --reporter=json --outputFile=/Users/dawsonblock/Downloads/HysightX/test_reports/frontend-vitest.json",
+              "counts": {
+                "error_test_count": 0,
+                "failed_test_count": 0,
+                "passed_test_count": 70,
+                "skipped_test_count": 0,
+                "total_test_count": 70
+              },
+              "metadata": {
+                "num_failed_test_suites": 0,
+                "num_passed_test_suites": 23,
+                "num_runtime_error_test_suites": 0,
+                "num_total_test_suites": 23,
+                "success": true
+              },
+              "name": "vitest",
+              "report": "test_reports/frontend-vitest.json",
+              "returncode": 0,
+              "status": "passed",
+              "stderr_tail": null,
+              "stdout_tail": "yarn run v1.22.22\n$ vitest run --reporter=json --outputFile=/Users/dawsonblock/Downloads/HysightX/test_reports/frontend-vitest.json\nJSON report written to /Users/dawsonblock/Downloads/HysightX/test_reports/frontend-vitest.json\nDone in 7.88s."
+            },
+            {
+              "command": "yarn build",
+              "name": "build",
+              "returncode": 0,
+              "status": "passed",
+              "stderr_tail": null,
+              "stdout_tail": "yarn run v1.22.22\n$ vite build\nvite v6.4.2 building for production...\ntransforming...\n\u2713 2000 modules transformed.\nrendering chunks...\ncomputing gzip size...\nbuild/index.html                      5.89 kB \u2502 gzip:   2.53 kB\nbuild/assets/operator-c88vf3tO.css    3.73 kB \u2502 gzip:   1.19 kB\nbuild/assets/autonomy-Cy9VbE4n.css    9.65 kB \u2502 gzip:   2.38 kB\nbuild/assets/index-CIFB-lvj.css      75.97 kB \u2502 gzip:  14.16 kB\nbuild/assets/autonomy-Bfg4Bsvv.js   106.83 kB \u2502 gzip:  30.02 kB\nbuild/assets/operator-BKGAmPjt.js   117.12 kB \u2502 gzip:  28.25 kB\nbuild/assets/index-B_MWYVuz.js      128.34 kB \u2502 gzip:  36.32 kB\nbuild/assets/vendor-CZcJVSeP.js     361.39 kB \u2502 gzip: 114.24 kB\n\u2713 built in 2.77s\nDone in 3.03s."
+            }
+          ],
+          "yarn_version": "1.22.22"
+        },
+        "receipt_json": "artifacts/proof/frontend.json",
+        "returncode": 0,
+        "skipped_cases": []
+      }
+    ]
+  },
+  "outcome": "passed",
+  "passed_test_count": 71,
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "proof_tier": "frontend",
+  "python_version": "3.9.7",
+  "repo_fingerprint": "b3d9885f0273f246de9f06453cad5210083a5cde",
+  "schema_version": 2,
+  "service_connection_mode": "none",
+  "service_endpoint": "n/a",
+  "skipped_test_count": 0,
+  "timestamp": "2026-04-26T07:38:23.463476+00:00",
+  "total_test_count": 71
+}
