@@ -2,16 +2,23 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   min-height: 0;
+  padding: 4px;
 }
 
 .autonomy-workspaceHeader,
 .autonomy-panel {
-  border: 1px solid rgba(148, 163, 184, 0.24);
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.84);
-  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.04), 0 2px 4px -2px rgba(15, 23, 42, 0.02);
+  transition: box-shadow 200ms ease;
+}
+
+.autonomy-workspaceHeader:hover,
+.autonomy-panel:hover {
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 4px 6px -4px rgba(15, 23, 42, 0.02);
 }
 
 .autonomy-workspaceHeader {
@@ -62,12 +69,30 @@
 }
 
 .autonomy-panel--kill {
-  border-color: rgba(248, 113, 113, 0.28);
-  background: rgba(255, 250, 250, 0.9);
+  border-color: rgba(239, 68, 68, 0.2);
+  background: linear-gradient(145deg, rgba(254, 242, 242, 0.95), rgba(255, 250, 250, 0.9));
+  position: relative;
+}
+
+.autonomy-panel--killActive {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: linear-gradient(145deg, rgba(254, 242, 242, 0.98), rgba(254, 226, 226, 0.95));
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1), 0 10px 25px -5px rgba(239, 68, 68, 0.15);
+  animation: killSwitchPulse 2s ease-in-out infinite;
+}
+
+@keyframes killSwitchPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1), 0 10px 25px -5px rgba(239, 68, 68, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.15), 0 15px 35px -5px rgba(239, 68, 68, 0.2);
+  }
 }
 
 .autonomy-panel--selectedRun {
-  border-color: rgba(15, 118, 110, 0.28);
+  border-color: rgba(15, 118, 110, 0.2);
+  background: linear-gradient(145deg, rgba(240, 253, 250, 0.95), rgba(236, 253, 245, 0.9));
 }
 
 .autonomy-sectionHeader,
@@ -94,19 +119,32 @@
 
 .autonomy-sectionTitle {
   margin: 0;
-  color: #10233c;
+  color: #0f172a;
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  letter-spacing: -0.03em;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.autonomy-sectionEyebrow {
+  color: #64748b;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
 }
 
 .autonomy-sectionCount {
   border-radius: 999px;
-  background: rgba(226, 232, 240, 0.74);
-  color: #334155;
-  font-size: 0.76rem;
-  font-weight: 700;
-  padding: 4px 10px;
+  background: linear-gradient(145deg, #f1f5f9, #e2e8f0);
+  color: #475569;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  min-width: 24px;
+  text-align: center;
 }
 
 .autonomy-sectionActions {
@@ -143,50 +181,92 @@
 
 .autonomy-metricGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
 }
 
 .autonomy-metric {
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9));
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-height: 128px;
-  padding: 14px;
+  gap: 10px;
+  min-height: 110px;
+  padding: 16px;
+  transition: all 200ms ease;
+}
+
+.autonomy-metric:hover {
+  border-color: rgba(148, 163, 184, 0.25);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+  transform: translateY(-1px);
 }
 
 .autonomy-metric--success {
-  border-color: rgba(16, 185, 129, 0.32);
-  background: rgba(236, 253, 245, 0.92);
+  border-color: rgba(16, 185, 129, 0.3);
+  background: linear-gradient(145deg, rgba(236, 253, 245, 0.95), rgba(209, 250, 229, 0.9));
 }
 
 .autonomy-metric--warning {
-  border-color: rgba(245, 158, 11, 0.32);
-  background: rgba(255, 251, 235, 0.92);
+  border-color: rgba(245, 158, 11, 0.3);
+  background: linear-gradient(145deg, rgba(255, 251, 235, 0.95), rgba(254, 243, 199, 0.9));
 }
 
 .autonomy-metric--danger {
-  border-color: rgba(239, 68, 68, 0.32);
-  background: rgba(254, 242, 242, 0.92);
+  border-color: rgba(239, 68, 68, 0.3);
+  background: linear-gradient(145deg, rgba(254, 242, 242, 0.95), rgba(254, 226, 226, 0.9));
+}
+
+.autonomy-metricProgress {
+  width: 100%;
+  height: 4px;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: auto;
+}
+
+.autonomy-metricProgressBar {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 300ms ease;
+}
+
+.autonomy-metricProgressBar--success {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.autonomy-metricProgressBar--warning {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.autonomy-metricProgressBar--danger {
+  background: linear-gradient(90deg, #ef4444, #f87171);
 }
 
 .autonomy-metricLabel {
-  color: #0f766e;
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  color: #64748b;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .autonomy-metricValue,
 .autonomy-keyValueValue {
-  color: #10233c;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.35;
+  color: #0f172a;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.autonomy-metricHint {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  margin-top: auto;
 }
 
 .autonomy-keyValueValue--wrap {
@@ -196,30 +276,66 @@
 .autonomy-status {
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   border-radius: 999px;
-  font-size: 0.76rem;
-  font-weight: 700;
-  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border: 1px solid transparent;
+  transition: all 150ms ease;
+}
+
+.autonomy-status::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .autonomy-status--success {
-  background: rgba(209, 250, 229, 0.9);
+  background: rgba(16, 185, 129, 0.12);
   color: #047857;
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.autonomy-status--success::before {
+  background: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
 }
 
 .autonomy-status--warning {
-  background: rgba(254, 243, 199, 0.95);
+  background: rgba(245, 158, 11, 0.12);
   color: #b45309;
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+.autonomy-status--warning::before {
+  background: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
 }
 
 .autonomy-status--danger {
-  background: rgba(254, 226, 226, 0.95);
+  background: rgba(239, 68, 68, 0.12);
   color: #b91c1c;
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.autonomy-status--danger::before {
+  background: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
 }
 
 .autonomy-status--neutral {
-  background: rgba(226, 232, 240, 0.95);
-  color: #334155;
+  background: rgba(100, 116, 139, 0.1);
+  color: #475569;
+  border-color: rgba(100, 116, 139, 0.2);
+}
+
+.autonomy-status--neutral::before {
+  background: #64748b;
+  box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.15);
 }
 
 .autonomy-strongCell {
@@ -237,42 +353,77 @@
 }
 
 .autonomy-button {
-  border: 1px solid rgba(148, 163, 184, 0.28);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  color: #10233c;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 10px;
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  color: #334155;
   cursor: pointer;
-  font-size: 0.82rem;
-  font-weight: 700;
-  padding: 8px 12px;
-  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 9px 16px;
+  transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
 }
 
 .autonomy-button:hover:not(:disabled) {
   transform: translateY(-1px);
-  border-color: rgba(15, 118, 110, 0.4);
-  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
+  border-color: rgba(100, 116, 139, 0.4);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+  background: linear-gradient(145deg, #ffffff, #f1f5f9);
+}
+
+.autonomy-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
 }
 
 .autonomy-button:disabled {
-  cursor: wait;
-  opacity: 0.66;
+  cursor: not-allowed;
+  opacity: 0.5;
+  background: rgba(241, 245, 249, 0.8);
 }
 
 .autonomy-button--secondary {
-  color: #155e75;
+  color: #475569;
+  background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+}
+
+.autonomy-button--secondary:hover:not(:disabled) {
+  border-color: rgba(71, 85, 105, 0.4);
+  background: linear-gradient(145deg, #f1f5f9, #e2e8f0);
 }
 
 .autonomy-button--success {
-  border-color: rgba(16, 185, 129, 0.34);
-  background: rgba(236, 253, 245, 0.95);
-  color: #047857;
+  border-color: rgba(16, 185, 129, 0.3);
+  background: linear-gradient(145deg, #10b981, #059669);
+  color: white;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.autonomy-button--success:hover:not(:disabled) {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: linear-gradient(145deg, #059669, #047857);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .autonomy-button--danger {
-  border-color: rgba(239, 68, 68, 0.34);
-  background: rgba(254, 242, 242, 0.95);
-  color: #b91c1c;
+  border-color: rgba(239, 68, 68, 0.3);
+  background: linear-gradient(145deg, #ef4444, #dc2626);
+  color: white;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+.autonomy-button--danger:hover:not(:disabled) {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: linear-gradient(145deg, #dc2626, #b91c1c);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.autonomy-button--danger:disabled {
+  background: linear-gradient(145deg, #fca5a5, #f87171);
 }
 
 .autonomy-tableWrap {
@@ -287,28 +438,38 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
 }
 
 .autonomy-tableHeader {
   position: sticky;
   top: 0;
   background: rgba(248, 250, 252, 0.98);
-  color: #475569;
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  padding: 10px 10px 8px;
+  color: #64748b;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 12px 10px;
   text-align: left;
   text-transform: uppercase;
   vertical-align: top;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .autonomy-tableCell {
-  border-top: 1px solid rgba(226, 232, 240, 0.82);
-  color: #0f172a;
-  padding: 10px;
+  border-top: 1px solid rgba(226, 232, 240, 0.6);
+  color: #334155;
+  padding: 12px 10px;
   vertical-align: top;
+  transition: background-color 150ms ease;
+}
+
+.autonomy-table tbody tr:hover .autonomy-tableCell {
+  background-color: rgba(248, 250, 252, 0.6);
+}
+
+.autonomy-table tbody tr:first-child .autonomy-tableCell {
+  border-top: none;
 }
 
 .autonomy-form {

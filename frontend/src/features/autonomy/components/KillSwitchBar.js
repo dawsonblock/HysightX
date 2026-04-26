@@ -23,7 +23,7 @@ export default function KillSwitchBar({ actionKey, autonomyStatus, killReason, o
   }
 
   return (
-    <section className="autonomy-panel autonomy-panel--kill">
+    <section className={`autonomy-panel autonomy-panel--kill${autonomyStatus?.kill_switch_active ? " autonomy-panel--killActive" : ""}`}>
       <SectionHeader
         title="Kill switch"
         description="Real backend safety control. The UI waits for backend confirmation before showing success."
